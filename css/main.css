@@ -3,8 +3,14 @@ body {
     margin: 0px;
     padding: 0px;
 }
+/* Fuentes */
 
-.font-gray {
+a {
+
+    text-decoration: none;
+}
+
+.font-grayBold {
     color: #6a696e;
     font-size: 14px;
     font-family: 'Nunito-ExtraBold', sans-serif;
@@ -12,50 +18,171 @@ body {
     letter-spacing: normal;
 }
 
-.menu-logo {
-    background-color: white;
-    width: 100%; 
-    height: 60px;
+.fontGP80 {
+    font-family: 'GoldPlay', sans-serif;
+    font-size: 80px;
+    color:white;
+}
+
+.fontBlack80Bold {
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    font-size: 80px;
+    color:white;
+
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.font-whiteBold {
+    color: white;
+    font-size: 14px;
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    line-height: 1.71;
+    letter-spacing: normal;
+}
+
+.font-whiteBlack16 {
+    color: rgb(46, 44, 54);;
+    font-size: 16px;
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    letter-spacing: normal;
+
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.font-whiteBlack16Lite {
+    color: rgb(46, 44, 54);;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: normal;
+}
+
+.font-whiteGray14Lite {
+    color: rgb(106, 105, 110);
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: normal;
+}
+
+
+
+.font-whiteBlack18 {
+    color: rgb(46, 44, 54);;
+    font-size: 20px;
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    letter-spacing: normal;
+
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.font-white80 {
+    color: white;
+    font-size: 80px;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: normal;
+}
+
+
+.font-gray {
+    color: #6a696e;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.71;
+    letter-spacing: normal;
+}
+
+.font-gray-big {
+    color: #6a696e;
+    font-size: 20px;
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.71;
+    letter-spacing: normal;
+}
+
+
+.nav {
     position: fixed;
 }
 
-.logo { 
-    width: 180px; 
-    height: 32px; 
-    float: left; 
+
+.menu-nav {
+    background-color: white;
+    position: fixed;
+    width: 100%;
 }
 
-.logo_burguer {
-    margin-top: 14px;
-    margin-left: 16px;
-    width: 40px;
-    float:left;
-}
-
-.burguer {
-    width: 30px;
+.borderGray {
+    border-top-color: #6a696e;
+    border-top-width: 10px;
+    
 }
 
 .input_find {
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 4px;
-    height: 30px;
+    height: 40px;
+    width:  400px;
     float: left;
-    background-color: #b3b9c2;
+    background-color: #f7f8f9;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .find {
-  
+    margin-left: 3px;
+    width: 360px;
     border: 0;
-    background-color: #b3b9c2;
-
+    background-color: #f7f8f9;
+    outline: none;
 }
+
+.red_button {
+    height: 40px;
+    width: 40px;
+    background-color: #ff441f;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.green_button {
+    height: 40px;
+    width: 80px;
+    background-color: rgb(41, 216, 132);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.center_ico_white{
+    color: white;
+}
+
 
 
 .menu {
     width: 400px;
     margin: 5px;
-    float: right;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    
 }
 
 .menu ul li {    
@@ -66,7 +193,371 @@ body {
     display: inline-block;
 }
 
-.banner_top {
-    height: 500px;
+.banner_topRed {
+    height: 400px;
     background-color: #ff441f;
+    padding-bottom: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
+
+
+
+.positionCabSection {
+    padding-left: 30px;
+    padding-top : 50px;
+    padding-bottom : 30px;
+    
+}
+
+.banner_section {
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-bottom: 30px;
+}
+
+.backGroundGray {
+    background-color: #f7f8f9;
+}
+
+.backGroundWhite {
+    background-color: white;
+}
+
+
+
+.banner_section_Cards {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    padding-left: 20px;
+    padding-bottom: 20px;
+
+}
+
+.card_category {
+    width: 180px;
+    height: 180px;
+    background-color: white;
+    margin: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;   
+
+    border-radius: 12px;
+
+}
+
+
+.img_category {
+    margin-top: 0px;
+    padding-top: 10px;
+    width: 65%;
+}
+
+.box_textCategory{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.arrow_red {
+    color: #ff441f;
+    margin-left: 4px;
+    margin-top:  7px;
+}
+
+.text_category {
+    margin-top: 10px;
+}
+
+
+.box_center {
+    width: 60%;
+}
+
+.input_find_map {
+    padding: 4px;
+    height: 80px;
+    width:  600px;
+
+    background-color: #f7f8f9;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ico_map {
+
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #f7f8f9;
+} 
+
+.find_map {
+    margin-left: 3px;
+    width: 560px;
+    border: 0;
+    background-color: #f7f8f9;
+    outline: none;
+}
+
+.multiBoxRow_responsive {
+
+    margin-left:  10px;
+    margin-right: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.multiBoxCol_responsive {
+
+    margin-left:  10px;
+    margin-right: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+
+.multiBoxRow_responsive .boxFlex450 {
+    width: 450px;
+
+
+}
+
+.multiBoxCol_responsive .boxFlex100 {
+    width: 1000px;
+    height: 600px;
+    margin-top: 40px;
+}
+
+
+.inCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.logo_center {
+
+    margin-left: 16px;
+    width: 40px;
+    height: 100%;
+    float:left;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center_ico_gray {
+    color: #6a696e;
+    text-decoration: none;
+}
+
+
+
+.card_top_restaurant {
+
+    width: 210px;
+    height: 250px;
+    margin: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;   
+}
+
+.boxNomRestaurant {
+    margin-top: 10px;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;       
+}
+
+
+
+
+.boxImageCenter{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background: #333944;
+    border-radius: 12px;
+  }
+  .boxImage{
+
+    width: 210px;
+    height: 150px;
+
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  
+  .boxImage img{
+    width: 100%;
+    height: auto;
+  }
+  @supports(object-fit: cover){
+      .boxImage img{
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+  }
+
+.modal {
+    margin-top : 0px;
+    padding-top: 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+
+    /*#2e2c36bd*/
+
+    opacity: 0;                             /* para que no se vea el modal*/
+    pointer-events: none;                   /* desactivar los eventos del modal*/
+    transition: opacity .2s .2s;            /* modifica la opacidad en una transicion de .6s */
+    --transform: translateX(-100vh);        
+    --transition: transform .8s;            /* Modifica a transform */
+
+}
+
+.modal__container {
+    margin-top : 0px;
+    padding-top: 1px;
+    width: 280px;
+    height: 100%;
+    background-color: #fff;
+    transform: var(--transform);        /* Llama a la custom properties de modal */
+    transition: var(--transition);
+}
+
+.modal--show {
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity .2s;
+    --transform: translateX(0);
+    --transform: transform .4s .4s;
+}
+
+.modal__close {
+    text-decoration: none;
+  /*  transition: background-color .2s;*/
+}
+
+.container_top{
+    height: 50px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: column;    
+} 
+
+.container_minisection{
+    height: 60px;
+
+    display: flex;
+    align-content: space-around;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-direction: row;    
+    flex-wrap: wrap;
+} 
+
+.container_minisection_category{
+    height: 60px;
+
+    display: flex;
+    align-content: space-between;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-direction: row;    
+    flex-wrap: wrap;
+
+} 
+
+.container-ico {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;    
+}
+
+.container-textcategory_modal {
+    height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;   
+}
+
+
+.line_gray {
+    height: 2px;
+    background-color: #f7f8f9;
+}
+
+.button_green {
+    background-color: rgb(41, 216, 132);
+    padding-top : 6px;
+    padding-bottom: 6px;
+    padding-left : 28px;
+    padding-right: 28px;
+    border-radius: 8px;
+}
+
+.list_category_modal {
+    padding-left: 15px;
+    padding-right: 15px;
+    width : 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-between;
+    align-items: flex-start;
+    justify-content: space-between;
+
+}
+
+.list_category_modal:hover {
+    background-color: #f7f8f9;
+}
+
+.button_green:hover {
+
+    background-color:  #29c584;
+
+}
+

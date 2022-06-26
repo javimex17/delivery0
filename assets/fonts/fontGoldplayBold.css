@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Goldplay';
+    src: local('Goldplay Bold'), local('Goldplay-Bold'),
+        url('Goldplay-Bold.woff2') format('woff2'),
+        url('Goldplay-Bold.woff') format('woff'),
+        url('Goldplay-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
