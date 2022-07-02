@@ -71,6 +71,18 @@ a {
     letter-spacing: normal;
 }
 
+.fontRed24Bold {
+
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    font-size: 20px;
+    color: rgb(255, 68, 31);
+
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
 
 
 .font-whiteBlack18 {
@@ -85,6 +97,33 @@ a {
     margin-inline-end: 0px;
     font-weight: bold;
 }
+
+.font-whiteBlack12 {
+    color: rgb(46, 44, 54);;
+    font-size: 12px;
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    letter-spacing: normal;
+
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.font-green12 {
+    color: rgb(46, 44, 54);;
+    font-size: 10px;
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    letter-spacing: normal;
+
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
 
 .font-white80 {
     color: white;
@@ -101,6 +140,15 @@ a {
     line-height: 1.71;
     letter-spacing: normal;
 }
+
+.font-gray12 {
+    color: #6a696e;
+    font-size: 12px;
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.71;
+    letter-spacing: normal;
+}
+
 
 .font-gray-big {
     color: #6a696e;
@@ -559,5 +607,101 @@ a {
 
     background-color:  #29c584;
 
+}
+
+.title_secundary_red {
+    background-color: rgb(255, 242, 229);
+    height: 130px;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-around;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.title_section {
+    padding-left: 35px;
+    padding-top: 55px;
+}
+
+.band_filter {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-around;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 80px;
+}
+
+.band_section {
+    padding-left: 35px;
+}
+
+.button_filter {
+    display: flex;
+    cursor: pointer;
+    border: 1px solid rgb(230, 235, 241);
+    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+}
+
+.button_filter svg{
+    width: 30px;
+    height: 30px;
+}
+
+.button_filter_green {
+    font-size: 12px;
+    font-family: Nunito-ExtraBold;
+    line-height: 1.83;
+    letter-spacing: normal;
+    color: rgb(41, 216, 132);
+}
+
+.box_button {
+    padding-right : 15px;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-around;
+    align-items: flex-start;
+    justify-content: space-between;
+
+}
+
+
+
+
+.eIOxFI {
+width: 66px;
+height: 32px;
+line-height: 32px;
+display: flex;
+-webkit-box-align: center;
+align-items: center;
+-webkit-box-pack: center;
+justify-content: center;
+border-radius: 10px;
+border: 1px solid rgb(230, 235, 241);
+text-align: center;
+cursor: pointer;
+}
+
+.exHXJW {
+font-size: 12px;
+font-family: Nunito-Regular;
+line-height: 1.83;
+letter-spacing: normal;
+color: rgb(46, 44, 54);
+}
+
+.DmYAA {
+    width: max-content;
+    padding: 1rem;
 }
 
