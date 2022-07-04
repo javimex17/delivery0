@@ -425,7 +425,14 @@ a {
     text-decoration: none;
 }
 
-
+.card_restaurant {
+    width: 210px;
+    height: 210px;
+    margin: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;   
+}
 
 .card_top_restaurant {
 
@@ -447,8 +454,13 @@ a {
     flex-direction: column;       
 }
 
+.boxNomRestaurant_bnd {
 
-
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;       
+}
 
 .boxImageCenter{
     display: flex;
@@ -649,6 +661,10 @@ a {
     height: 30px;
 }
 
+
+
+
+
 .button_filter svg{
     width: 30px;
     height: 30px;
@@ -674,34 +690,42 @@ a {
 
 }
 
-
-
-
-.eIOxFI {
-width: 66px;
-height: 32px;
-line-height: 32px;
-display: flex;
--webkit-box-align: center;
-align-items: center;
--webkit-box-pack: center;
-justify-content: center;
-border-radius: 10px;
-border: 1px solid rgb(230, 235, 241);
-text-align: center;
-cursor: pointer;
+.button_filter_label {
+    display: flex;
+    cursor: pointer;
+    border: 1px solid rgb(230, 235, 241);
+    border-radius: 10px;
+    padding-left : 8px;
+    padding-right: 8px;
+    padding-top : 5px;
+    padding-bottom: 5px;
 }
 
-.exHXJW {
-font-size: 12px;
-font-family: Nunito-Regular;
-line-height: 1.83;
-letter-spacing: normal;
-color: rgb(46, 44, 54);
-}
+input[type="checkbox"]:checked {
+    display: none;
+    box-shadow: 0 0 0 3px hotpink;
+  }
 
-.DmYAA {
-    width: max-content;
-    padding: 1rem;
-}
+  input[type="checkbox"] {
+    display: none;
+    box-shadow: 0 0 0 3px hotpink;
+  }
+  
+  /* Elementos Option, cuando se seleccionan */
+  option:checked {
+    display: none;
+    box-shadow: 0 0 0 3px lime;
+    color: red;
+  }
+
+
+  input:checked + label {
+    color:  #29c584;
+    background-color: rgb(233, 252, 242);
+  }
+
+  .button_filter_label:hover {
+    color:  #29c584;
+    background-color: rgb(233, 252, 242);
+  }
 
