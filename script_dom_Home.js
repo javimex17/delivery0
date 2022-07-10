@@ -1,9 +1,16 @@
 
-const arrayCategory = [];
+// Get the input field
+
+
+
+
+//const arrayCategory = [];
+
+/*
 let contadorID      = 0;
 
 
-class Category {
+class CategoryObj {
     constructor (id, nombre, imagen) {
         this.id = id,
         this.nombre = nombre,
@@ -12,19 +19,19 @@ class Category {
     }
 }
 
- const addCategory = (nombre, imagen) => {
-        const categoryAdd = new Category(parseInt (++contadorID),nombre,imagen)
+ const addCategoryObj = (nombre, imagen) => {
+        const categoryAdd = new CategoryObj(parseInt (++contadorID),nombre,imagen)
         arrayCategory.push (categoryAdd);
     }
 
-    addCategory ("Restaurantes", "./assets/category/restaurants.webp" );
-    addCategory ("Super", "./assets/category/cpgs.webp" );
-    addCategory ("Farmacia", "./assets/category/pharmacy.webp" );
-    addCategory ("Express", "./assets/category/express.webp" );
-    addCategory ("Tiendas", "./assets/category/store_type.webp" );
-    addCategory ("Licores", "./assets/category/spirits.webp" );
-    addCategory ("Travel", "./assets/category/travel.webp" );
-    addCategory ("Turbo-Fresh", "./assets/category/8min.webp" );
+    addCategoryObj ("Restaurantes", "./assets/category/restaurants.webp" );
+    addCategoryObj ("Super", "./assets/category/cpgs.webp" );
+    addCategoryObj ("Farmacia", "./assets/category/pharmacy.webp" );
+    addCategoryObj ("Express", "./assets/category/express.webp" );
+    addCategoryObj ("Tiendas", "./assets/category/store_type.webp" );
+    addCategoryObj ("Licores", "./assets/category/spirits.webp" );
+    addCategoryObj ("Travel", "./assets/category/travel.webp" );
+    addCategoryObj ("Turbo-Fresh", "./assets/category/8min.webp" );
 
 
 let box_category = document.getElementById ("box_category")
@@ -61,7 +68,7 @@ let box_category = document.getElementById ("box_category")
 
     }
 
-
+*/
     /*
 
     <div class="card_category">

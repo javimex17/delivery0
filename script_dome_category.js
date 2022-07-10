@@ -23,11 +23,11 @@ const arrayNomRestaurant = [
     ["Franco Cocina Honesta", "4.2", "30"], 
     ["Taquearte", "4", "30"],
     ["McDonald's", "5", "30"],
-    ["kabuki Sushi", "5", "25"],
+    ["Kabuki Sushi", "5", "25"],
     ["Nimi's", "4.5", "20"],
     ["Shake Shack", "4", "40"],
-    ["Little Caesars", "4.5", "30"],
-    ["El Japonez", "5", "34"],
+    ["Little Caesars", "4.5", "30"]
+   /* ["El Japonez", "5", "34"],
     ["Taco Naco", "4.5", "30"],
     ["Sushi Roll", "4", "45"],
     ["Pola Poke", "4.5", "40"],
@@ -43,7 +43,7 @@ const arrayNomRestaurant = [
     ["Tori Tori", "4,5", "35"],
     ["Koku", "3", "35"],
     ["We Love Burgers", "4", "32"],
-    ["Carl's Jr.", "5", "30"]
+    ["Carl's Jr.", "5", "30"]*/
 ];
 
 const arrayProductRestaurant = [

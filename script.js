@@ -2,6 +2,16 @@
 const arrayCategory = [];
 let contadorIDDOM      = 0;
 
+var input = document.getElementById("idMaps");
+
+input.addEventListener("keypress", function(event) {
+
+  if (event.key === "Enter") {
+    alert ("habilite la ubicación en su navegador");
+  //  event.preventDefault();
+  //  document.getElementById("myBtn").click();
+  }
+});
 
 class Category {
     constructor (id, nombre, imagen) {
