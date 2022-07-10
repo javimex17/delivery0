@@ -32,10 +32,6 @@ let box_category = document.getElementById ("box_category")
 
     for (let index = 0; index < arrayCategory.length; index++) {
 
-        console.log (arrayCategory[index].nombre);
-        console.log (arrayCategory[index].imagen);
-
-
         let card_category = document.createElement ("div");
         let img_category = document.createElement ('img');
         let box_textCategory = document.createElement ("div");
@@ -61,7 +57,7 @@ let box_category = document.getElementById ("box_category")
 
     }
 
-
+/* 
 // Inicializo las variables
 let titulo = "PRODUCTOS PARA TU TIENDA ON LINE\r\n____";
 let totalProductos     = 5;
@@ -207,3 +203,5 @@ do {
     }
 
 } while ( opcion != "5" )
+
+*/

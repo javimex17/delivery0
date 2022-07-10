@@ -4,9 +4,7 @@ body {
     padding: 0px;
 }
 /* Fuentes */
-
 a {
-
     text-decoration: none;
 }
 
@@ -251,7 +249,12 @@ a {
     flex-direction: column;
 }
 
-
+.positionModalSection {
+    padding-left: 30px;
+    padding-top : 50px;
+    padding-bottom : 30px;
+    
+}
 
 .positionCabSection {
     padding-left: 30px;
@@ -431,7 +434,8 @@ a {
     margin: 8px;
     display: flex;
     align-items: center;
-    flex-direction: column;   
+    flex-direction: column;  
+    cursor : pointer; 
 }
 
 .card_top_restaurant {
@@ -483,6 +487,34 @@ a {
     width: 100%;
     height: auto;
   }
+
+
+  .boxImageProductCenter{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background: #333944;
+    border-radius: 12px;
+  }
+
+  .boxImageProduct{
+    width: 140px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  
+  .boxImageProduct img{
+    width: 100%;
+    height: auto;
+  }
+
+
+
+
+
+
   @supports(object-fit: cover){
       .boxImage img{
         height: 100%;
@@ -554,7 +586,7 @@ a {
 } 
 
 .container_minisection_category{
-    height: 60px;
+
 
     display: flex;
     align-content: space-between;
@@ -576,6 +608,7 @@ a {
 
 .container-textcategory_modal {
     height: 50px;
+
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -598,6 +631,18 @@ a {
     border-radius: 8px;
 }
 
+.section_modal {
+    padding-left: 15px;
+    padding-right: 15px;
+    width : 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-between;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
 .list_category_modal {
     padding-left: 15px;
     padding-right: 15px;
@@ -610,6 +655,120 @@ a {
     justify-content: space-between;
 
 }
+
+.card_product {
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    width : 100%;
+
+    border: 1px solid rgb(230, 235, 241);
+    border-radius: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-between;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.box_card_Description {
+    padding-left: 20px;
+
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;    
+    align-content: space-around;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+}
+
+.box_card_Description_price {
+    padding-left: 20px;
+    max-width: 130px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;    
+    align-content: space-around;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.box_card_ButtonAdd {
+    padding-left: 20px;
+    width: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-between;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+
+.dZSNmN {
+    background-color: rgb(41, 216, 132);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+
+    top: 0px;
+    right: 0px;
+}
+
+.dZSNmN.large {
+    width: 40px;
+    height: 40px;
+}
+
+.dZSNmN svg {
+    display: block;
+    margin: 0px auto;
+    text-align: center;
+}
+
+.dZSNmN svg path {
+    fill: rgb(255, 255, 255);
+}
+
+.seccion_category_product_modal {
+    width : 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: center;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.seccion_product_modal {
+    padding-top:  15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+    width : 100%;
+
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: center;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+
+
 
 .list_category_modal:hover {
     background-color: #f7f8f9;
@@ -728,4 +887,97 @@ input[type="checkbox"]:checked {
     color:  #29c584;
     background-color: rgb(233, 252, 242);
   }
+
+
+/* Modal para los productos del restaurant*/
+
+  .modalRestaurant {
+/*    margin-top : 0px; */
+/*    padding-top: 0px;  */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+    opacity: 0;                             /* para que no se vea el modal*/
+    pointer-events: none;                   /* desactivar los eventos del modal*/
+    transition: opacity .2s .2s;            /* modifica la opacidad en una transicion de .6s */
+    --transform: translateY(-100vh);        
+    --transition: transform .8s;  
+    display: flex;                                 /* Modifica a transform */
+}
+
+.modalRestaurant__container {
+    margin: auto;
+    margin-top : 5%;
+    padding-top: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90%;
+
+    background-color: #fff;
+    transform: var(--transform);        /* Llama a la custom properties de modal */
+    transition: var(--transition);
+    border-radius: 8px;
+}
+
+.modalRestaurant--show {
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity .2s;
+    --transform: translateY(0);
+    --transform: transform .4s .4s;
+}
+
+.modalRestaurant__close {
+    text-decoration: none;
+  /*  transition: background-color .2s;*/
+}
+
+.svg_add {
+    width : 24px;
+    height: 24px;
+    fill: "none";    
+}
+
+.imgRestaurant {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-between;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.green_button_circle {
+    height: 40px;
+    width: 40px;
+    background-color: rgb(41, 216, 132);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.red_pannel_total {
+    background-color: rgb(255, 68, 31);
+    padding-top : 6px;
+    padding-bottom: 6px;
+    padding-left : 28px;
+    padding-right: 28px;
+    margin-right: 18px;
+    border-radius: 5px;
+}
+
+.container_minisection_right{
+    height: 60px;
+    display: flex;
+    align-content: space-around;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: row;    
+    flex-wrap: wrap;
+} 
 
