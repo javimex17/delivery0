@@ -2,21 +2,46 @@ const openModalRestaurant  = document.getElementsByClassName('action_menuRestaur
 const modalRestaurant      = document.querySelector('.modalRestaurant');
 const closeModalRestaurant = document.querySelector('.modal__closeRestaurant');
 
-//openModalRestaurant.addEventListener('click',(e)=>{
-  //  e.preventDefault();
-    //modalRestaurant.classList.add ('modalRestaurant--show');
-//});
+const closeCarritoPago     = document.getElementById ('closeCarritoPago');
 
-closeModalRestaurant.addEventListener('click',(e)=>{
-    e.preventDefault();
-    modalRestaurant.classList.remove ('modalRestaurant--show');
-});
+const modalShopOpen        = document.getElementById('action_menu_shop');
+const modalShopClose       = document.getElementById('modal_menu__close');
 
+const modalShopRestaurantClose       = document.getElementById('closeAddRestaurant');
 
-const arrayRestaurant = [];
-const arrayProductFilter = [];
+const modalShop            = document.querySelector ('.modal_menu')
+
+const closeModalGeneral = document.querySelector ('.modal__closeRestaurant');
+
+const arrayRestaurant       = [];
+const arrayProductFilter    = [];
+let arrayCarrito            = [];
+
+// Si el carrito existe lo cargo en arrayCarrito para seguir usándolo
+if (localStorage.getItem ("Carrito") != null) {
+    arrayCarrito = JSON.parse (localStorage.getItem ('Carrito'));
+}
+
+// Con la función calcularTotalCarrito Recorro el Carrito y lo muestro en pantalla
+const calcularTotalCarrito = (arrayCarrito) => {
+
+    //totalCarrito
+    let totalCarrito = document.getElementById ("totalCarrito");
+    let captionModalTotal = document.getElementById ("captionModalTotal");
+    let totalRest = 0;
+    arrayCarrito.forEach(object => {        
+        totalRest += ( object.quantity * object.price );
+    });
+    // Actualizo el carrito en la pantalla general y en el Modal del detalle del carrito
+    totalCarrito.textContent      = "$ "+parseInt (totalRest);
+    captionModalTotal.textContent = "$ "+parseInt (totalRest);
+
+}
+
+// Llamo a la función calcularTotalCarrito para mostrar el botón con el total
+calcularTotalCarrito (arrayCarrito);
+
 let totalProducts = 0;
-
 let contadorID = 0;
 
 const arrayNomRestaurant = [
@@ -26,15 +51,15 @@ const arrayNomRestaurant = [
     ["Kabuki Sushi", "5", "25"],
     ["Nimi's", "4.5", "20"],
     ["Shake Shack", "4", "40"],
-    ["Little Caesars", "4.5", "30"]
-   /* ["El Japonez", "5", "34"],
+    ["Little Caesars", "4.5", "30"],
+    ["El Japonez", "5", "34"],
     ["Taco Naco", "4.5", "30"],
-    ["Sushi Roll", "4", "45"],
-    ["Pola Poke", "4.5", "40"],
+    ["Sushi Itto", "4", "45"],
+    ["Las Alitas", "4.5", "40"],
     ["Hooters", "5", "30"],
-    ["El Naranjito", "3", "35"],
-    ["El Tizoncito", "4", "30"],
-    ["Papa John's", "4.3", "35"],
+    ["El Tizoncito", "4", "30"]
+  //  ["Papa Johns", "4.3", "35"]
+/*
     ["KFC", "4.3", "35"],
     ["Mr Blanco's", "4.5", "45"],
     ["Burger King", "4", "34"],
@@ -105,7 +130,58 @@ const arrayProductRestaurant = [
     ["7","7","Little Caesars","Pizzas","Pizza de Queso","109"],
     ["7","8","Little Caesars","Pizzas","Pizza Ultimate Supreme","179"],
     ["7","9","Little Caesars","Pizzas","Pizza Three Meat Treat","179"],
-    ["7","10","Little Caesars","Pizzas","Pizza Super Cheese","209"]
+    ["7","10","Little Caesars","Pizzas","Pizza Super Cheese","209"],
+    ["8","1","El Japonez","Entradas","Gyosas","120"],
+    ["8","2","El Japonez","Entradas","Robalo Roca","361"],
+    ["8","3","El Japonez","Entradas","Rollitos Tokio","268"],
+    ["8","4","El Japonez","Entradas","Spring Roll","169"],
+    ["8","5","El Japonez","Brochetas","Brocheta Res","190"],
+    ["8","6","El Japonez","Brochetas","Brocheta de Salmón","540"],
+    ["8","7","El Japonez","Brochetas","Brocheta Yakitori","100"],
+    ["9","1","Taco Naco","Entradas","Chicharrón de queso","90"],
+    ["9","2","Taco Naco","Entradas","Guacamole","70"],
+    ["9","3","Taco Naco","Entradas","Tuetanos","130"],
+    ["9","4","Taco Naco","Entradas","Nopales","50"],
+    ["9","5","Taco Naco","Tacos","Taco Picaña","60"],
+    ["9","6","Taco Naco","Tacos","Taco de Sirloin","60"],
+    ["9","7","Taco Naco","Tacos","Taco New York","60"],
+    ["9","8","Taco Naco","Tacos","Taco de Rib Eye","60"],
+    ["10","1","Sushi Itto","Entradas","Edamames","90"],
+    ["10","2","Sushi Itto","Entradas","Vota","90"],
+    ["10","3","Sushi Itto","Entradas","Camarones","190"],
+    ["10","4","Sushi Itto","Entradas","Baby Squid","130"],
+    ["10","5","Sushi Itto","Ramen","Chopu-men","200"],
+    ["10","6","Sushi Itto","Ramen","Umi-men","200"],
+    ["10","7","Sushi Itto","Ramen","Ebi-men","200"],
+    ["10","8","Sushi Itto","Ramen","Kotsu-men","200"],
+    ["11","1","Las Alitas","Alitas","Boneless Dobles","90"],
+    ["11","2","Las Alitas","Alitas","Platón Boneless","80"],
+    ["11","3","Las Alitas","Alitas","Boneless Snack","90"],
+    ["11","4","Las Alitas","Alitas","Magic Mike","100"],
+    ["11","5","Las Alitas","Alitas","Strippers","70"],
+    ["11","6","Las Alitas","Hamburguesas","Devil","190"],
+    ["11","7","Las Alitas","Hamburguesas","Buffalo","200"],
+    ["11","8","Las Alitas","Hamburguesas","Clásica","210"],
+    ["11","9","Las Alitas","Hamburguesas","Millonaria","200"],
+    ["12","1","Hooters","Entradas","Mac&Cheese","80"],
+    ["12","2","Hooters","Entradas","Caesar Salad","80"],
+    ["12","3","Hooters","Entradas","Bacon Wraped","80"],
+    ["12","4","Hooters","Wings","Wings Original","300"],
+    ["12","5","Hooters","Wings","Wings Medium","300"],
+    ["12","6","Hooters","Wings","Wings Large","300"],
+    ["12","7","Hooters","Wings","Wings Small","300"],
+    ["13","1","El Tizoncito","Entradas","Chicharrón de queso","40"],
+    ["13","2","El Tizoncito","Entradas","Guacamole","50"],
+    ["13","3","El Tizoncito","Tacos","Orden de Chorizo","140"],
+    ["13","4","El Tizoncito","Tacos","Orden de Pollo","150"],
+    ["13","5","El Tizoncito","Tacos","Orden de Bistec","130"]
+    /*
+    ["14","1","Papa Jhons","Pizza","Margarita","200"],
+    ["14","2","Papa Jhons","Pizza","Marinara","240"],
+    ["14","3","Papa Jhons","Pizza","Diavola","250"],
+    ["14","4","Papa Jhons","Pizza","Venice","260"],
+    ["14","5","Papa Jhons","Pizza","Ricotta","250"]
+    */
 ]
 
 const filtrarDesc = query => {
@@ -175,8 +251,86 @@ class productRestaurant {
     }
 }
 
+class carrito {
+    constructor (idRestaurant, idProduct, restaurant, quantity, category, nombre, image, price ) {
+        this.idRestaurant = idRestaurant;
+        this.idProduct = idProduct,
+        this.restaurant = restaurant,
+        this.quantity = quantity,
+        this.category = category,
+        this.nombre = nombre,
+        this.image = image,
+        this.price = price
+        return this; 
+    }
+}
+
+
+modalShopRestaurantClose.addEventListener('click',(e)=>{
+    // Cada vez que cierro el modal del carrito borro el carrito y lo guardo en el local Storage
+    localStorage.removeItem ("Carrito");
+    localStorage.setItem ("Carrito", JSON.stringify(arrayCarrito));
+    e.preventDefault();
+    modalRestaurant.classList.remove ('modalRestaurant--show');
+});
+
+closeModalRestaurant.addEventListener('click',(e)=>{
+    // Cada vez que cierro el modal del carrito borro el carrito y lo guardo en el local Storage
+    localStorage.removeItem ("Carrito");
+    localStorage.setItem ("Carrito", JSON.stringify(arrayCarrito));
+    e.preventDefault();
+    modalRestaurant.classList.remove ('modalRestaurant--show');
+});
+
+modalRestaurant.addEventListener ('click', (e)=> {
+    e.preventDefault();
+    if (e.target.classList.contains ('modalRestaurant')) {
+     //   modalRestaurant.classList.remove ('modalRestaurant--show');
+    }
+});
+
+
+modalShopOpen.addEventListener ('click',(e)=>{
+    // Guardo el carrito.
+    construirPopCarrito (arrayCarrito);
+    modalShop.classList.add ('modal_menu--show'); 
+
+});
+
+
+modalShopClose.addEventListener ('click',(e)=>{
+    // Cada vez que cierro el modal del carrito borro el carrito y lo guardo en el local Storage
+    localStorage.removeItem ("Carrito");
+    localStorage.setItem ("Carrito", JSON.stringify(arrayCarrito));
+    modalShop.classList.remove ('modal_menu--show');
+
+
+});
+
+// Libero el Storage del Carrito solo cuando pulso en el botón del pago
+// Al liberar el Storage actualizo el array del Carrito y reinicio todo.
+closeCarritoPago.addEventListener ('click',(e)=>{
+    localStorage.removeItem ("Carrito");
+    alert ("Su Pago ha sido realizado... -> (RemoveStorage)")
+    modalShop.classList.remove ('modal_menu--show');
+
+    while (arrayCarrito.length > 0)
+        arrayCarrito.pop();
+
+    calcularTotalCarrito (arrayCarrito);
+
+});
+
+
 // en esta función a partir del nombre de un restaurante lleno un array filtrado con un objeto
 // Limpio cada vez en array antes de llenarlo otra vez
+
+
+// hacer un filter ...
+
+// función que guarda el arrayCarrito en el local Storage
+
+
 const filtrarProduct = (nombre) => {
     
     while (arrayProductFilter.length > 0)
@@ -201,10 +355,53 @@ const filtrarProduct = (nombre) => {
 }
 
 
+const addCarrito = (idRestaurant, idProduct, restaurant, quantity, category, nombre, image, price ) => {
+    const carritoAdd = new carrito (idRestaurant, idProduct, restaurant, quantity, category, nombre, image, price)
+    arrayCarrito.push (carritoAdd);
+}
+
 const addRestaurant = (nombre, imagen, top, tiempo) => {
     const restaurantAdd = new Restaurant(parseInt (++contadorID),nombre,imagen, top, tiempo)
     arrayRestaurant.push (restaurantAdd);
 }
+
+
+// Busco producto por idRestaurant y idProduct
+    function findQuantityProduct (idRestaurant, idProduct) {
+        return ((arrayCarrito.idRestaurant === idRestaurant) &&  (arrayCarrito.idProduct === idProduct))
+    }
+
+
+// Esta función agrega líneas en el carrito agrupándolas por artículo
+// Sería conveniente ordenar por restaurante / Producto
+const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nombre, image, price, arrayCarrito) => {
+
+    let mensaje = '';
+    let existe  = 0;
+
+    if (arrayCarrito.length === 0) {
+        addCarrito 
+        (idRestaurant, idProduct, restaurant, valor, 
+        category, nombre, image, price);
+     //   alert ("No existe, array vacio "); 
+    }
+    else {
+        arrayCarrito.forEach ((arrayCarritogroup, index) => {
+            if (nombre == arrayCarritogroup.nombre) {
+                arrayCarritogroup.quantity += valor;
+                existe = 1;
+            }
+        });
+        if (existe == 0) {
+            addCarrito 
+            (idRestaurant, idProduct, restaurant, valor, 
+            category, nombre, image, price);
+            existe = 0;      
+        }
+    }
+
+}
+
 
 for (let i = 0; i < arrayNomRestaurant.length; i++) {
     addRestaurant (arrayNomRestaurant[i][0], 
@@ -216,11 +413,10 @@ let banner_section_Cards = document.getElementById ("banner_section_Cards")
 
 const addSumTotal = (nuevoValor) => {
     totalProducts += nuevoValor;
-
 }
 
 
-
+// for each
 // Con este bucle recorro los restaurantes de arrayNomRestaurant y creo las tarjetas.
 for (let index = 0; index < arrayRestaurant.length; index++) {
 
@@ -268,11 +464,8 @@ for (let index = 0; index < arrayRestaurant.length; index++) {
         totalProducts = 0;
         modalRestaurant.classList.add ('modalRestaurant--show');
         console.log (openModalRestaurant[index].id);
-        construirPopProducts ( filtrarProduct (openModalRestaurant[index].id) );
+       construirPopProducts ( filtrarProduct (openModalRestaurant[index].id) );
     });
-
-
-
 
 }
 
@@ -282,10 +475,24 @@ const construirPopProducts = (restaurante) => {
     let seccion_product_modal = document.getElementById ("seccion_product_modal")
     seccion_product_modal.innerHTML='';
     let tituloMenu = document.getElementById ("tituloMenu");
+    let totalrest = 0;
+    const action_Total   = document.getElementById ('captionTotal');
+    action_Total.textContent = "Total $ "+totalProducts;
 
-    // Este bucle está forzado a 4 productos mientras resuelvo el desplazamiento dentro del popup
-    for (let i = 0; i < 4; i++) {
+                // Muestro el total del restaurante ( -> pasar a una función )
+                arrayCarrito.forEach(object => {
+                    
+                    if ( (object.idRestaurant === restaurante[0].idRestaurant) ) {
+                        console.log (object);  
+                        totalrest += ( object.quantity * object.price );
+                        action_Total.textContent = "Total $ "+totalrest;
+                      }
+                });
+
+    // Este bucle construye las tarjetas de los productos del restaurante
+    for (let i = 0; restaurante.length -1; i++) {
         
+
         let card_product = document.createElement ("div");
         let boxImageProductCenter = document.createElement ("div");
         let boxImageProduct = document.createElement ("div");
@@ -297,6 +504,10 @@ const construirPopProducts = (restaurante) => {
         let desc_font_whiteBlack16_price = document.createElement ("div");
         let box_card_ButtonAdd = document.createElement ("div");
         let button_green = document.createElement ("div");
+        let box_card_Quantity = document.createElement ("div");
+        let green_button_circle_Quantity = document.createElement ("div");
+        let center_ico_white_quantity = document.createElement ("span");
+
       //  let button_green_svg = document.createElement ("svg");
         let spanButton_green = document.createElement ("span");
         
@@ -311,6 +522,10 @@ const construirPopProducts = (restaurante) => {
         desc_font_whiteBlack16.className = "font-whiteBlack16 overflow-visible";
         desc_font_grayBold.className = "font-grayBold overflow-visible";
         
+        box_card_Quantity.className = "box_card_Quantity";
+        green_button_circle_Quantity.className = "green_button_circle_Quantity";
+        center_ico_white_quantity.className = "center_ico_white";
+
         box_card_Description_price.className = "box_card_Description_price";
         desc_font_whiteBlack16_price.className = "font-whiteBlack16 overflow-visible";
         
@@ -331,6 +546,17 @@ const construirPopProducts = (restaurante) => {
                 desc_box_card_Description.appendChild (desc_font_whiteBlack16);
                 desc_box_card_Description.appendChild (desc_font_grayBold);
         
+            card_product.appendChild (box_card_Quantity);
+                box_card_Quantity.appendChild (green_button_circle_Quantity);
+                
+            // Muestro la cantidad en cada tarjeta que ya hay en el carrito de ese producto                 
+            arrayCarrito.forEach(object => {
+                    if ( (object.idRestaurant === restaurante [i].idRestaurant) && (object.idProduct === restaurante [i].idProduct) ) {
+                        green_button_circle_Quantity.appendChild (center_ico_white_quantity);
+                        center_ico_white_quantity.textContent = object.quantity;
+                    }
+                });
+
             card_product.appendChild (box_card_Description_price);
                 box_card_Description_price.appendChild (desc_font_whiteBlack16_price);
 
@@ -346,26 +572,147 @@ const construirPopProducts = (restaurante) => {
             desc_font_whiteBlack16_price.textContent = "$ "+restaurante [i].price;   
             imgRestaurant.src = restaurante[i].image;
 
-            const action_Total   = document.getElementById ('captionTotal');
-            action_Total.textContent = "Total $ "+totalProducts;
-
-        /*
-            
-            const action_addNo = !!document.querySelector ('action_add');
-            console.log ("Elemento ->",action_add);
-            console.log ("Is Not null ? ",action_addNo);
-        */            
-    
             const action_add   = document.getElementsByClassName ('action_add');
 
-            action_add [i].addEventListener ('click',(e)=>{
+            action_add [i].addEventListener ('click',(e) => {
                 e.preventDefault();
                 console.log ("action ",action_add [i].id);
                 addSumTotal (parseInt (action_add [i].id));
+                cantidad = 0;
+                cantidadArray = [];
+                totalrestClick = 0;
+
+                // Actualizo el total
                 const action_Total   = document.getElementById ('captionTotal');
                 action_Total.textContent = "Total $ "+totalProducts;
-            });
+
+                // Voy actualizando el carrito cada vez que pulso +
+                alterCarrito (restaurante [i].idRestaurant, restaurante [i].idProduct, restaurante [i].restaurant, 1, 
+                    restaurante [i].category, restaurante [i].nombre, restaurante [i].image, restaurante[i].price, arrayCarrito);
+                   
+                // Muestro la cantidad en cada tarjeta que ya hay en el carrito de ese producto  
+                arrayCarrito.forEach(object => {
+                    if ( (object.idRestaurant === restaurante [i].idRestaurant) && (object.idProduct === restaurante [i].idProduct) ) {
+                        green_button_circle_Quantity.appendChild (center_ico_white_quantity);
+                        center_ico_white_quantity.textContent = object.quantity;
+                    }
+                });
+            
+                // Muestro el total del restaurante ( -> pasar a una función )
+                arrayCarrito.forEach(object => {
+                    if ( (object.idRestaurant === restaurante[0].idRestaurant) ) {
+                        totalrestClick += ( object.quantity * object.price );
+                        action_Total.textContent = "Total $ "+totalrestClick;
+                      }
+                });
+                
+                // Actualizo el total del Carrito 
+                calcularTotalCarrito (arrayCarrito);
+
+            } );
     }
 
-}    
+
+
+}   
+
+// Construyo el carrito con los restaurantes y sus productos comprados en el carrito
+const construirPopCarrito = (arrayCarrito) => {
+
+    
+    //Primero ordeno el array arrayCarrito con idRestaurante
+    arrayCarrito = arrayCarrito.sort(function (first, last){
+        return (first.idRestaurant - last.idRestaurant);
+    })
+
+
+    // Identifico el DIV desde donde armo las tarjetas
+    let seccion_product_modal = document.getElementById ("seccion_product_modalShop")
+    seccion_product_modal.innerHTML='';
+
+    let card_RestaurantShop  = document.createElement ("div");
+ 
+    seccion_product_modal.appendChild (card_RestaurantShop);
+    //Recorro el array Ordenado armando primero como título el restaurante
+    let idRestaurant = ""
+        arrayCarrito.forEach (object => {
+
+
+            let box_card_Description = document.createElement ("div");
+            let fontRestaurant = document.createElement ("div");
+            let card_productShop = document.createElement ("div");
+            let boxImageProductCenterShop = document.createElement ("div");
+            let boxImageProductShop = document.createElement ("div");
+            let imgRestaurantShop = document.createElement ("img");
+            let box_card_DescriptionProduct = document.createElement ("div");
+            let fontProduct = document.createElement ("div");
+            let fontAmount = document.createElement ("div");
+            // Tarjeta para editar cantidad
+            let card_edit_product = document.createElement ("div");
+            let addCardProduct = document.createElement ("div");
+            let fontQuantity = document.createElement ("div");
+            let removeCardProduct = document.createElement ("div");
+
+
+            card_RestaurantShop.className = "card_RestaurantShop";
+            box_card_Description.className = "box_card_Description";
+            fontRestaurant.className = "font-whiteBlack16 overflow-visible";
+
+            card_productShop.className = "card_productShop";
+            boxImageProductCenterShop.className = "boxImageProductCenterShop";
+            boxImageProductShop.className = "boxImageProductShop";
+            imgRestaurantShop.className = "imgRestaurantShop"
+            box_card_DescriptionProduct.className = "box_card_Description";
+            fontProduct.className = "font-whiteGray14Lite overflow-visible";
+            fontAmount.className = "font-whiteBlack14 overflow-visible";
+
+            // Tarjeta para editar cantidad
+            card_edit_product.className = "card_edit_product";
+            addCardProduct.className = "material-symbols-outlined";
+            fontQuantity.className = "font-white14LiteCard";
+            removeCardProduct.className = "material-symbols-outlined";
+
+            
+            if ((idRestaurant == "") || (idRestaurant != object.idRestaurant) ) 
+            {
+                idRestaurant = object.idRestaurant;
+           //     alert (object.restaurant);
+                if (idRestaurant == object.idRestaurant) {
+                        card_RestaurantShop.appendChild (box_card_Description);
+                            box_card_Description.appendChild (fontRestaurant)
+                            fontRestaurant.textContent = object.restaurant;
+                };
+            }
+
+          //   alert (object.restaurant+" "+object.nombre);
+             card_RestaurantShop.appendChild (card_productShop);
+                
+                card_productShop.appendChild (boxImageProductCenterShop);
+                    boxImageProductCenterShop.appendChild (boxImageProductShop)
+                        boxImageProductShop.appendChild (imgRestaurantShop)
+                    
+                card_productShop.appendChild (box_card_DescriptionProduct);
+                    box_card_DescriptionProduct.appendChild (fontProduct);
+                    box_card_DescriptionProduct.appendChild (fontAmount);    
+
+                card_productShop.appendChild (card_edit_product);
+                    card_edit_product.appendChild (addCardProduct);
+                    card_edit_product.appendChild (fontQuantity);
+                    card_edit_product.appendChild (removeCardProduct);
+
+                    addCardProduct.textContent    = "add";
+                    fontQuantity.textContent      = object.quantity;
+                    removeCardProduct.textContent = "remove";
+
+                    fontProduct.textContent = object.nombre;
+                    fontAmount.textContent  = "$ "+object.price+" * "+object.quantity+" = $ "+parseInt (object.quantity * object.price);
+                    imgRestaurantShop.src   = object.image;
+
+        });
+
+}
+
+
+
+
 

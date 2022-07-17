@@ -34,6 +34,17 @@ a {
     font-weight: bold;
 }
 
+.fontBlack16Red {
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    font-size: 16px;
+    color: rgb(255, 68, 31);
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
 .font-whiteBold {
     color: white;
     font-size: 14px;
@@ -107,6 +118,33 @@ a {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
+}
+
+
+.font-white14LiteCard {
+    margin-left : 10px;
+    margin-right: 10px;
+    color: rgb(46, 44, 54);;
+    font-size: 16px;
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    letter-spacing: normal;
+    margin-block-start: 0.25em;
+    font-weight: bold;
+}
+
+
+.font-whiteBlack14 {
+    color: rgb(46, 44, 54);;
+    font-size: 14px;
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    letter-spacing: normal;
+
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+
 }
 
 .font-green12 {
@@ -511,10 +549,6 @@ a {
   }
 
 
-
-
-
-
   @supports(object-fit: cover){
       .boxImage img{
         height: 100%;
@@ -522,6 +556,57 @@ a {
         object-position: center center;
       }
   }
+
+
+  .modal_menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+    opacity: 0;                             /* para que no se vea el modal*/
+    pointer-events: none;                   /* desactivar los eventos del modal*/
+    transition: opacity .2s .2s;            /* modifica la opacidad en una transicion de .6s */
+    --transform: translateY(-100vh);        
+    --transition: transform .8s;            /* Modifica a transform */
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-around;
+    flex-direction: flex-end;      
+}
+
+.modal_menu__container {
+    margin: auto;
+    margin-top : 5%;
+    padding-top: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90%;
+    background-color: #fff;
+    transform: var(--transform);        /* Llama a la custom properties de modal */
+    transition: var(--transition);
+    border-radius: 8px;
+}
+
+.modal_menu--show {
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity .2s;
+    --transform: translateY(0);
+    --transform: transform .4s .4s;
+}
+
+.modal_menu__close {
+    text-decoration: none;
+  /*  transition: background-color .2s;*/
+}
+
+
+
+
+
 
 .modal {
     margin-top : 0px;
@@ -656,6 +741,26 @@ a {
 
 }
 
+
+.card_edit_product {
+ 
+    margin: 10px;
+    padding : 10px;
+
+    border: 1px solid rgb(230, 235, 241);
+    border-radius: 10px;
+
+    display: flex;
+
+    flex-direction: row;    
+    align-content: center;
+    
+    justify-content: center;
+
+
+}
+
+
 .card_product {
     padding-top: 15px;
     padding-left: 15px;
@@ -701,7 +806,7 @@ a {
 
 .box_card_ButtonAdd {
     padding-left: 20px;
-    width: 80px;
+    width: 50px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;    
@@ -709,6 +814,31 @@ a {
     align-items: flex-end;
     justify-content: flex-end;
 }
+
+
+
+.box_card_Quantity {
+    width: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.green_button_circle_Quantity {
+    height: 20px;
+    width: 20px;
+    margin-top: 12px;
+    background-color: rgb(41, 216, 132);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
 
 
 .dZSNmN {
@@ -762,12 +892,15 @@ a {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;    
-    align-content: center;
+
+   /* align-content: center;*/
+
     align-items: flex-start;
     justify-content: center;
+
+    max-height: 60vh;
+    overflow-y: auto;
 }
-
-
 
 
 .list_category_modal:hover {
@@ -905,7 +1038,7 @@ input[type="checkbox"]:checked {
     transition: opacity .2s .2s;            /* modifica la opacidad en una transicion de .6s */
     --transform: translateY(-100vh);        
     --transition: transform .8s;  
-    display: flex;                                 /* Modifica a transform */
+    display: flex;                          /* Modifica a transform */
 }
 
 .modalRestaurant__container {
@@ -942,6 +1075,7 @@ input[type="checkbox"]:checked {
 }
 
 .imgRestaurant {
+
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;    
@@ -949,6 +1083,20 @@ input[type="checkbox"]:checked {
     align-items: flex-end;
     justify-content: flex-end;
 }
+
+.imgProduct {
+    position: absolute;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-between;
+    align-items: flex-end;
+    justify-content: flex-end;
+    z-index: 1;
+}
+
+
 
 .green_button_circle {
     height: 40px;
@@ -981,3 +1129,91 @@ input[type="checkbox"]:checked {
     flex-wrap: wrap;
 } 
 
+
+
+.card_RestaurantShop {
+    padding: 10px;
+    width : 100%;
+    color: black;
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-around;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+}
+
+
+.card_productShop {
+    padding: 10px;
+    width : 100%;
+
+    border: 1px solid rgb(230, 235, 241);
+    border-radius: 14px;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-between;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+}
+
+.seccion_product_modalShop {
+    padding-left: 15px;
+    padding-right: 15px;
+    width : 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-items: flex-start;
+    justify-content: center;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.boxImageProductCenterShop{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background: #333944;
+    border-radius: 12px;
+  }
+
+  .boxImageProductShop{
+    width: 70px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  
+  .boxImageProductShop img{
+    width: 100%;
+    height: auto;
+  }
+
+  .imgRestaurantShop {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;    
+    align-content: space-between;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.box_card_Description {
+    padding-left: 20px;
+
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;    
+    align-content: space-around;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+}
