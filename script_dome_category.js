@@ -1,26 +1,20 @@
-const openModalRestaurant  = document.getElementsByClassName('action_menuRestaurant');
-const modalRestaurant      = document.querySelector('.modalRestaurant');
-const closeModalRestaurant = document.querySelector('.modal__closeRestaurant');
+const openModalRestaurant       = document.getElementsByClassName('action_menuRestaurant');
+const modalRestaurant           = document.querySelector('.modalRestaurant');
+const closeModalRestaurant      = document.querySelector('.modal__closeRestaurant');
+const closeCarritoPago          = document.getElementById ('closeCarritoPago');
+const modalShopOpen             = document.getElementById('action_menu_shop');
+const modalShopClose            = document.getElementById('modal_menu__close');
+const modalShopRestaurantClose  = document.getElementById('closeAddRestaurant');
+const modalShop                 = document.querySelector ('.modal_menu')
+const closeModalGeneral         = document.querySelector ('.modal__closeRestaurant');
 
-const closeCarritoPago     = document.getElementById ('closeCarritoPago');
+const arrayRestaurant           = [];
+const arrayProductFilter        = [];
+let arrayCarrito                = [];
 
-const modalShopOpen        = document.getElementById('action_menu_shop');
-const modalShopClose       = document.getElementById('modal_menu__close');
+// Si el carrito existe lo cargo en arrayCarrito para seguir usándolo --> Uso operador Lógico
+(localStorage.getItem ("Carrito") != null ) &&  ( arrayCarrito = JSON.parse (localStorage.getItem ('Carrito')) );
 
-const modalShopRestaurantClose       = document.getElementById('closeAddRestaurant');
-
-const modalShop            = document.querySelector ('.modal_menu')
-
-const closeModalGeneral = document.querySelector ('.modal__closeRestaurant');
-
-const arrayRestaurant       = [];
-const arrayProductFilter    = [];
-let arrayCarrito            = [];
-
-// Si el carrito existe lo cargo en arrayCarrito para seguir usándolo
-if (localStorage.getItem ("Carrito") != null) {
-    arrayCarrito = JSON.parse (localStorage.getItem ('Carrito'));
-}
 
 // Con la función calcularTotalCarrito Recorro el Carrito y lo muestro en pantalla
 const calcularTotalCarrito = (arrayCarrito) => {
@@ -44,20 +38,59 @@ calcularTotalCarrito (arrayCarrito);
 let totalProducts = 0;
 let contadorID = 0;
 
+
+
+const arrayNomTurbo = [
+    ["Wallmart", "4", "30","Turbo"]
+]
+
+
+const arrayNomTravel = [
+    ["Wego", "4", "30", "Travel"]
+]
+
+
+const arrayNomLicores = [
+    ["Casa Tequila", "4", "30", "Licores"], 
+    ["Corona", "4", "30", "Licores"],
+]
+
+const arrayNomExpress = [
+    ["Wallmart", "4", "30", "Express"]
+
+]
+
+
+const arrayNomFarmacia = [
+    ["Benavides", "4", "30", "Farmacia"], 
+    ["Farmacias Similares", "4", "30", "Farmacia"],
+    ["YZA", "5", "30", "Farmacia"],
+    ["San Pablo", "5", "25", "Farmacia"],
+]
+
+
+const arrayNomSuper = [
+    ["Wallmart", "4", "30", "Super"], 
+    ["Soriana", "4", "30", "Super"],
+    ["Costco", "5", "30", "Super"],
+    ["Chedraui", "5", "25", "Super"],
+]
+
+
 const arrayNomRestaurant = [
-    ["Franco Cocina Honesta", "4.2", "30"], 
-    ["Taquearte", "4", "30"],
-    ["McDonald's", "5", "30"],
-    ["Kabuki Sushi", "5", "25"],
-    ["Nimi's", "4.5", "20"],
-    ["Shake Shack", "4", "40"],
-    ["Little Caesars", "4.5", "30"],
-    ["El Japonez", "5", "34"],
-    ["Taco Naco", "4.5", "30"],
-    ["Sushi Itto", "4", "45"],
-    ["Las Alitas", "4.5", "40"],
-    ["Hooters", "5", "30"],
-    ["El Tizoncito", "4", "30"]
+    ["Franco Cocina Honesta", "4.2", "30", "Restaurant"], 
+    ["Taquearte", "4", "30", "Restaurant"],
+    ["McDonald's", "5", "30", "Restaurant"],
+    ["Kabuki Sushi", "5", "25", "Restaurant"],
+    ["Nimi's", "4.5", "20", "Restaurant"],
+    ["Shake Shack", "4", "40", "Restaurant"],
+    ["Little Caesars", "4.5", "30", "Restaurant"],
+    ["El Japonez", "5", "34", "Restaurant"],
+    ["Taco Naco", "4.5", "30", "Restaurant"],
+    ["Sushi Itto", "4", "45", "Restaurant"],
+    ["Las Alitas", "4.5", "40", "Restaurant"],
+    ["Hooters", "5", "30", "Restaurant"],
+    ["El Tizoncito", "4", "30", "Restaurant"]
   //  ["Papa Johns", "4.3", "35"]
 /*
     ["KFC", "4.3", "35"],
@@ -70,6 +103,19 @@ const arrayNomRestaurant = [
     ["We Love Burgers", "4", "32"],
     ["Carl's Jr.", "5", "30"]*/
 ];
+
+// Array uniendo los array de nombres de categorías
+const arrayNom = [
+    ...arrayNomTurbo,
+    ...arrayNomTravel,
+    ...arrayNomLicores,
+    ...arrayNomExpress,
+    ...arrayNomFarmacia,
+    ...arrayNomSuper,
+    ...arrayNomRestaurant
+    ]
+
+
 
 const arrayProductRestaurant = [
     ["1","1","Franco Cocina Honesta","Promo del mes","Bowl de pollo","240"],
@@ -175,6 +221,7 @@ const arrayProductRestaurant = [
     ["13","3","El Tizoncito","Tacos","Orden de Chorizo","140"],
     ["13","4","El Tizoncito","Tacos","Orden de Pollo","150"],
     ["13","5","El Tizoncito","Tacos","Orden de Bistec","130"]
+
     /*
     ["14","1","Papa Jhons","Pizza","Margarita","200"],
     ["14","2","Papa Jhons","Pizza","Marinara","240"],
@@ -182,6 +229,7 @@ const arrayProductRestaurant = [
     ["14","4","Papa Jhons","Pizza","Venice","260"],
     ["14","5","Papa Jhons","Pizza","Ricotta","250"]
     */
+   
 ]
 
 const filtrarDesc = query => {
@@ -303,8 +351,6 @@ modalShopClose.addEventListener ('click',(e)=>{
     localStorage.removeItem ("Carrito");
     localStorage.setItem ("Carrito", JSON.stringify(arrayCarrito));
     modalShop.classList.remove ('modal_menu--show');
-
-
 });
 
 // Libero el Storage del Carrito solo cuando pulso en el botón del pago
@@ -463,7 +509,6 @@ for (let index = 0; index < arrayRestaurant.length; index++) {
         e.preventDefault();
         totalProducts = 0;
         modalRestaurant.classList.add ('modalRestaurant--show');
-        console.log (openModalRestaurant[index].id);
        construirPopProducts ( filtrarProduct (openModalRestaurant[index].id) );
     });
 
@@ -481,9 +526,8 @@ const construirPopProducts = (restaurante) => {
 
                 // Muestro el total del restaurante ( -> pasar a una función )
                 arrayCarrito.forEach(object => {
-                    
+        
                     if ( (object.idRestaurant === restaurante[0].idRestaurant) ) {
-                        console.log (object);  
                         totalrest += ( object.quantity * object.price );
                         action_Total.textContent = "Total $ "+totalrest;
                       }
@@ -576,7 +620,6 @@ const construirPopProducts = (restaurante) => {
 
             action_add [i].addEventListener ('click',(e) => {
                 e.preventDefault();
-                console.log ("action ",action_add [i].id);
                 addSumTotal (parseInt (action_add [i].id));
                 cantidad = 0;
                 cantidadArray = [];
@@ -586,25 +629,45 @@ const construirPopProducts = (restaurante) => {
                 const action_Total   = document.getElementById ('captionTotal');
                 action_Total.textContent = "Total $ "+totalProducts;
 
+
+                // Voy actualizando el carrito cada vez que pulso + . -> Uso la desestructuración con el objeto restaurante[i]
+                const {idRestaurant, idProduct, restaurant, category, nombre, image, price } = restaurante[i];
+
+                alterCarrito (idRestaurant, idProduct, restaurant, 1, 
+                    category, nombre, image, price, arrayCarrito);
+
+                // Muestro la cantidad en cada tarjeta que ya hay en el carrito de ese producto  
+                    arrayCarrito.forEach(object => {
+                        if ( (object.idRestaurant === idRestaurant) && (object.idProduct === idProduct) ) {
+                            green_button_circle_Quantity.appendChild (center_ico_white_quantity);
+                            center_ico_white_quantity.textContent = object.quantity;
+                        }
+                    });
+
+                // Muestro el total del restaurante ( -> pasar a una función )
+                    arrayCarrito.forEach(object => {
+                        if ( (object.idRestaurant === idRestaurant) ) {
+                            totalrestClick += ( object.quantity * object.price );
+                            action_Total.textContent = "Total $ "+totalrestClick;
+                            }
+                    });
+
+
                 // Voy actualizando el carrito cada vez que pulso +
-                alterCarrito (restaurante [i].idRestaurant, restaurante [i].idProduct, restaurante [i].restaurant, 1, 
-                    restaurante [i].category, restaurante [i].nombre, restaurante [i].image, restaurante[i].price, arrayCarrito);
+          /*      alterCarrito (restaurante [i].idRestaurant, restaurante [i].idProduct, restaurante [i].restaurant, 1, 
+                    restaurante [i].category, restaurante [i].nombre, restaurante [i].image, restaurante[i].price, arrayCarrito);   */
                    
                 // Muestro la cantidad en cada tarjeta que ya hay en el carrito de ese producto  
+          /*
                 arrayCarrito.forEach(object => {
                     if ( (object.idRestaurant === restaurante [i].idRestaurant) && (object.idProduct === restaurante [i].idProduct) ) {
                         green_button_circle_Quantity.appendChild (center_ico_white_quantity);
                         center_ico_white_quantity.textContent = object.quantity;
                     }
                 });
+            */
             
-                // Muestro el total del restaurante ( -> pasar a una función )
-                arrayCarrito.forEach(object => {
-                    if ( (object.idRestaurant === restaurante[0].idRestaurant) ) {
-                        totalrestClick += ( object.quantity * object.price );
-                        action_Total.textContent = "Total $ "+totalrestClick;
-                      }
-                });
+
                 
                 // Actualizo el total del Carrito 
                 calcularTotalCarrito (arrayCarrito);
@@ -636,7 +699,6 @@ const construirPopCarrito = (arrayCarrito) => {
     //Recorro el array Ordenado armando primero como título el restaurante
     let idRestaurant = ""
         arrayCarrito.forEach (object => {
-
 
             let box_card_Description = document.createElement ("div");
             let fontRestaurant = document.createElement ("div");
@@ -711,8 +773,3 @@ const construirPopCarrito = (arrayCarrito) => {
         });
 
 }
-
-
-
-
-
