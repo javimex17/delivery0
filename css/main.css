@@ -53,6 +53,11 @@ a {
     letter-spacing: normal;
 }
 
+.infoToastify {
+    font-family: 'Nunito-ExtraBold', sans-serif;
+    border-radius: 5px;
+} 
+
 .font-whiteBlack16 {
     color: rgb(46, 44, 54);;
     font-size: 16px;
@@ -336,14 +341,11 @@ a {
     height: 180px;
     background-color: white;
     margin: 12px;
-
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;   
-
     border-radius: 12px;
-
 }
 
 
@@ -351,6 +353,7 @@ a {
     margin-top: 0px;
     padding-top: 10px;
     width: 65%;
+    cursor : pointer; 
 }
 
 .box_textCategory{
@@ -1129,7 +1132,10 @@ input[type="checkbox"]:checked {
     flex-wrap: wrap;
 } 
 
+.action_menu_shop {
 
+    cursor : pointer; 
+}
 
 .card_RestaurantShop {
     padding: 10px;

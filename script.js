@@ -34,7 +34,7 @@ class Category {
     addCategory ("Tiendas", "./assets/category/store_type.webp" );
     addCategory ("Licores", "./assets/category/spirits.webp" );
     addCategory ("Travel", "./assets/category/travel.webp" );
-    addCategory ("Turbo-Fresh", "./assets/category/8min.webp" );
+    addCategory ("Turbo", "./assets/category/8min.webp" );
 
 
 let box_category = document.getElementById ("box_category")
@@ -52,6 +52,9 @@ let box_category = document.getElementById ("box_category")
         img_category.className = "img_category";
         box_textCategory.className = "box_textCategory";
         font_whiteBlack16.className = "font-whiteBlack16 text_category";
+
+        font_whiteBlack16.href = "./category.html#"+arrayCategory[index].nombre;
+        img_category.href = "./category.html#"+arrayCategory[index].nombre;
         material_symbols_outlined.className = "material-symbols-outlined arrow_red";
 
         img_category.setAttribute ("id","cat_"+arrayCategory[index].nombre);

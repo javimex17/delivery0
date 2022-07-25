@@ -1,20 +1,47 @@
-const openModalRestaurant       = document.getElementsByClassName('action_menuRestaurant');
-const modalRestaurant           = document.querySelector('.modalRestaurant');
-const closeModalRestaurant      = document.querySelector('.modal__closeRestaurant');
+
+
+const openModalRestaurant       = document.getElementsByClassName ('action_menuRestaurant');
+const modalRestaurant           = document.querySelector  ('.modalRestaurant');
+const closeModalRestaurant      = document.querySelector  ('.modal__closeRestaurant');
 const closeCarritoPago          = document.getElementById ('closeCarritoPago');
-const modalShopOpen             = document.getElementById('action_menu_shop');
-const modalShopClose            = document.getElementById('modal_menu__close');
-const modalShopRestaurantClose  = document.getElementById('closeAddRestaurant');
-const modalShop                 = document.querySelector ('.modal_menu')
-const closeModalGeneral         = document.querySelector ('.modal__closeRestaurant');
+const modalShopOpen             = document.getElementById ('action_menu_shop');
+const modalShopClose            = document.getElementById ('modal_menu__close');
+const modalShopRestaurantClose  = document.getElementById ('closeAddRestaurant');
+const modalShop                 = document.querySelector  ('.modal_menu')
+const closeModalGeneral         = document.querySelector  ('.modal__closeRestaurant');
+const categoryTextBlack         = document.getElementById ('categoryTextBlack');
+const categoryTextRed           = document.getElementById ('categoryTextRed');
+
 
 const arrayRestaurant           = [];
+const arrayRestaurant10         = [];
+const arrayShopCategory         = [];
+let arrayRestaurantPrint        = [];
 const arrayProductFilter        = [];
 let arrayCarrito                = [];
 
+//Obtengo la página donde estoy  index o category
+paginaActual = window.location.pathname;
+
+//Si paso a catégori necesito obtener qué categoría quiero mostrar
+let category = "";
+category = window.location.hash.replace ("#", "");
+
+// Función de notificación
+const notifica = (mensaje) => {
+    Toastify ({
+        className: "infoToastify",
+        text: mensaje,
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'center',
+        backgroundColor: "linear-gradient(to right, #ff441f, #ff441f)",
+    }).showToast ();
+}
+
+
 // Si el carrito existe lo cargo en arrayCarrito para seguir usándolo --> Uso operador Lógico
 (localStorage.getItem ("Carrito") != null ) &&  ( arrayCarrito = JSON.parse (localStorage.getItem ('Carrito')) );
-
 
 // Con la función calcularTotalCarrito Recorro el Carrito y lo muestro en pantalla
 const calcularTotalCarrito = (arrayCarrito) => {
@@ -30,6 +57,9 @@ const calcularTotalCarrito = (arrayCarrito) => {
     totalCarrito.textContent      = "$ "+parseInt (totalRest);
     captionModalTotal.textContent = "$ "+parseInt (totalRest);
 
+    if (totalRest > 0)
+    notifica ("Tiene productos en el carrito $ "+parseInt (totalRest));
+
 }
 
 // Llamo a la función calcularTotalCarrito para mostrar el botón con el total
@@ -41,56 +71,56 @@ let contadorID = 0;
 
 
 const arrayNomTurbo = [
-    ["Wallmart", "4", "30","Turbo"]
+    ["Wallmart", 4, "30","Turbo"]
 ]
 
-
 const arrayNomTravel = [
-    ["Wego", "4", "30", "Travel"]
+    ["Wego", 4, "30", "Travel"]
 ]
 
 
 const arrayNomLicores = [
-    ["Casa Tequila", "4", "30", "Licores"], 
-    ["Corona", "4", "30", "Licores"],
+    ["La Europea", "4", "30", "Licores"], 
+    ["Pari", 4, "30", "Licores"],
+]
+
+const arrayNomTiendas = [
+    ["Wallmart", 4, "30", "Tiendas"]
+
 ]
 
 const arrayNomExpress = [
-    ["Wallmart", "4", "30", "Express"]
-
+    ["Wallmart", 4, "30", "Express"]
 ]
-
 
 const arrayNomFarmacia = [
-    ["Benavides", "4", "30", "Farmacia"], 
-    ["Farmacias Similares", "4", "30", "Farmacia"],
-    ["YZA", "5", "30", "Farmacia"],
-    ["San Pablo", "5", "25", "Farmacia"],
+    ["Benavides", 4, "30", "Farmacia"], 
+    ["Farmacias Similares", 4, "30", "Farmacia"],
+    ["FarmaTodo", 5, "30", "Farmacia"],
+    ["Farmacias Guadalajara", 5, "25", "Farmacia"],
 ]
-
 
 const arrayNomSuper = [
-    ["Wallmart", "4", "30", "Super"], 
-    ["Soriana", "4", "30", "Super"],
-    ["Costco", "5", "30", "Super"],
-    ["Chedraui", "5", "25", "Super"],
+    ["Wallmart", 4, "30", "Super"], 
+    ["Soriana", 4, "30", "Super"],
+    ["Costco", 5, "30", "Super"],
+    ["Chedraui", 5, "25", "Super"],
 ]
 
-
 const arrayNomRestaurant = [
-    ["Franco Cocina Honesta", "4.2", "30", "Restaurant"], 
-    ["Taquearte", "4", "30", "Restaurant"],
-    ["McDonald's", "5", "30", "Restaurant"],
-    ["Kabuki Sushi", "5", "25", "Restaurant"],
-    ["Nimi's", "4.5", "20", "Restaurant"],
-    ["Shake Shack", "4", "40", "Restaurant"],
-    ["Little Caesars", "4.5", "30", "Restaurant"],
-    ["El Japonez", "5", "34", "Restaurant"],
-    ["Taco Naco", "4.5", "30", "Restaurant"],
-    ["Sushi Itto", "4", "45", "Restaurant"],
-    ["Las Alitas", "4.5", "40", "Restaurant"],
-    ["Hooters", "5", "30", "Restaurant"],
-    ["El Tizoncito", "4", "30", "Restaurant"]
+    ["Franco Cocina Honesta", 4.2, "30", "Restaurantes"],
+    ["Taquearte", 4, "30", "Restaurantes"],
+    ["McDonald's", 5, "30", "Restaurantes"],
+    ["Kabuki Sushi", 5, "25", "Restaurantes"],
+    ["Nimi's", 4.5, "20", "Restaurantes"],
+    ["Shake Shack", 4, "40", "Restaurantes"],
+    ["Little Caesars", 4.5, "30", "Restaurantes"],
+    ["El Japonez", 5, "34", "Restaurantes"],
+    ["Taco Naco", 4.5, "30", "Restaurantes"],
+    ["Sushi Itto", 4, "45", "Restaurantes"],
+    ["Las Alitas", 4.5, "40", "Restaurantes"],
+    ["Hooters", 5, "30", "Restaurantes"],
+    ["El Tizoncito", 4, "30", "Restaurantes"]
   //  ["Papa Johns", "4.3", "35"]
 /*
     ["KFC", "4.3", "35"],
@@ -106,16 +136,18 @@ const arrayNomRestaurant = [
 
 // Array uniendo los array de nombres de categorías
 const arrayNom = [
+    ...arrayNomRestaurant,
+    ...arrayNomTiendas,
     ...arrayNomTurbo,
     ...arrayNomTravel,
     ...arrayNomLicores,
     ...arrayNomExpress,
     ...arrayNomFarmacia,
-    ...arrayNomSuper,
-    ...arrayNomRestaurant
+    ...arrayNomSuper
     ]
 
 
+    
 
 const arrayProductRestaurant = [
     ["1","1","Franco Cocina Honesta","Promo del mes","Bowl de pollo","240"],
@@ -276,12 +308,13 @@ const ordenPrecio = [
 ]
 
 class Restaurant {
-    constructor (id, nombre, imagen, top, tiempo) {
+    constructor (id, nombre, imagen, top, tiempo, category) {
         this.id = id,
         this.nombre = nombre,
         this.imagen = imagen,
         this.top = top,
-        this.tiempo = tiempo
+        this.tiempo = tiempo,
+        this.category = category
         return this;
     }
 }
@@ -348,9 +381,19 @@ modalShopOpen.addEventListener ('click',(e)=>{
 
 modalShopClose.addEventListener ('click',(e)=>{
     // Cada vez que cierro el modal del carrito borro el carrito y lo guardo en el local Storage
+   /*
+    let spoilerRuta;
+    if (category.length > 0) {
+        spoilerRuta = category;
+        alert (spoiler)
+    }
+    */
+
     localStorage.removeItem ("Carrito");
     localStorage.setItem ("Carrito", JSON.stringify(arrayCarrito));
     modalShop.classList.remove ('modal_menu--show');
+
+
 });
 
 // Libero el Storage del Carrito solo cuando pulso en el botón del pago
@@ -375,6 +418,49 @@ closeCarritoPago.addEventListener ('click',(e)=>{
 // hacer un filter ...
 
 // función que guarda el arrayCarrito en el local Storage
+
+
+const filtrarCategory = (category) => {
+    while (arrayShopCategory.length > 0)
+           arrayShopCategory.pop();
+
+    for (i = 0; i < arrayRestaurant.length; i++) {
+        console.log ("category  "+arrayRestaurant[i]);
+        if (arrayRestaurant[i].category == category ) {
+            const ShopAdd = new Restaurant(
+                arrayRestaurant[i].id,
+                arrayRestaurant[i].nombre,
+                arrayRestaurant[i].imagen,
+                arrayRestaurant[i].top,
+                arrayRestaurant[i].tiempo,
+                arrayRestaurant[i].category
+                )
+                arrayShopCategory.push (ShopAdd);
+        }
+    }
+    return arrayShopCategory;
+}
+
+
+const filtrarRestaurant10 = (points) => {
+    while (arrayRestaurant10.length > 0)
+        arrayRestaurant10.pop();
+    for (i = 0; i < arrayRestaurant.length; i++) {
+       
+        if ( (arrayRestaurant[i].top == parseInt (points) ) && (arrayRestaurant[i].category == "Restaurantes") ) {
+            const RestaurantAdd = new Restaurant(
+                arrayRestaurant[i].id,
+                arrayRestaurant[i].nombre,
+                arrayRestaurant[i].imagen,
+                arrayRestaurant[i].top,
+                arrayRestaurant[i].tiempo,
+                arrayRestaurant[i].category
+                )
+                arrayRestaurant10.push (RestaurantAdd);
+        }
+    }
+    return arrayRestaurant10;
+}
 
 
 const filtrarProduct = (nombre) => {
@@ -406,8 +492,8 @@ const addCarrito = (idRestaurant, idProduct, restaurant, quantity, category, nom
     arrayCarrito.push (carritoAdd);
 }
 
-const addRestaurant = (nombre, imagen, top, tiempo) => {
-    const restaurantAdd = new Restaurant(parseInt (++contadorID),nombre,imagen, top, tiempo)
+const addRestaurant = (nombre, imagen, top, tiempo, category) => {
+    const restaurantAdd = new Restaurant(parseInt (++contadorID),nombre,imagen, top, tiempo, category)
     arrayRestaurant.push (restaurantAdd);
 }
 
@@ -418,6 +504,10 @@ const addRestaurant = (nombre, imagen, top, tiempo) => {
     }
 
 
+
+
+
+
 // Esta función agrega líneas en el carrito agrupándolas por artículo
 // Sería conveniente ordenar por restaurante / Producto
 const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nombre, image, price, arrayCarrito) => {
@@ -425,12 +515,14 @@ const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nomb
     let mensaje = '';
     let existe  = 0;
 
+    // Si el array del carrito está vacío grabo una línea sin mas
     if (arrayCarrito.length === 0) {
         addCarrito 
         (idRestaurant, idProduct, restaurant, valor, 
         category, nombre, image, price);
-     //   alert ("No existe, array vacio "); 
     }
+    // Si el array Carrito no está vacío...
+    // En este else si al recorrer el carrito existe añado una cantidad
     else {
         arrayCarrito.forEach ((arrayCarritogroup, index) => {
             if (nombre == arrayCarritogroup.nombre) {
@@ -438,6 +530,7 @@ const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nomb
                 existe = 1;
             }
         });
+        // Si no existe agrego una línea normal
         if (existe == 0) {
             addCarrito 
             (idRestaurant, idProduct, restaurant, valor, 
@@ -449,22 +542,57 @@ const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nomb
 }
 
 
-for (let i = 0; i < arrayNomRestaurant.length; i++) {
-    addRestaurant (arrayNomRestaurant[i][0], 
-        "./assets/restaurants/restaurant_"+parseInt(i+1)+".webp",
-        arrayNomRestaurant[i][1], arrayNomRestaurant[i][2]);
+
+
+// lleno el arrayRestaurant de arrayNom
+for (let i = 0; i < arrayNom.length; i++) {
+    
+    addRestaurant (arrayNom[i][0], 
+        "./assets/restaurants/"+arrayNom[i][3]+"_"+parseInt(i+1)+".webp",
+        arrayNom[i][1], arrayNom[i][2], arrayNom[i][3]);
+
 }
 
-let banner_section_Cards = document.getElementById ("banner_section_Cards")
+
+
+
+
+
+
+
 
 const addSumTotal = (nuevoValor) => {
     totalProducts += nuevoValor;
 }
 
 
+
+
+
 // for each
 // Con este bucle recorro los restaurantes de arrayNomRestaurant y creo las tarjetas.
-for (let index = 0; index < arrayRestaurant.length; index++) {
+// Solo necesto este bucle en la página category
+
+
+console.log (category+" "+paginaActual);
+
+if ( (paginaActual == "/index.html" ) || (paginaActual == "/" ) ) {
+    arrayRestaurantPrint = filtrarRestaurant10 (5);
+}
+else {
+
+    arrayRestaurantPrint = filtrarCategory (category)
+    categoryTextBlack.textContent = category+" cerca de mi";
+    categoryTextRed.textContent = category+" a domicilio";
+}
+
+
+
+
+    let banner_section_Cards = document.getElementById ("banner_section_Cards")
+
+    
+for (let index = 0; index < arrayRestaurantPrint.length; index++) {
 
     let card_restaurant = document.createElement ("div");
     let boxImageCenter = document.createElement ("div");
@@ -484,14 +612,14 @@ for (let index = 0; index < arrayRestaurant.length; index++) {
     boxNomRestaurant_bnd_nom.className = "boxNomRestaurant_bnd";
     font_whiteBlack16Lite_nom.className = "font-whiteGray14Lite";
    // font_whiteBlack16Lite_nom.setAttribute ("id", "NomRestaurant");
-    card_restaurant.setAttribute ("id", arrayRestaurant[index].nombre);
+    card_restaurant.setAttribute ("id", arrayRestaurantPrint[index].nombre);
 
     boxNomRestaurant_bnd_tiempo.className = "boxNomRestaurant_bnd";
     font_whiteBlack16Lite_tiempo.className = "font-whiteGray14Lite";
 
-    imgRestaurant.src = arrayRestaurant[index].imagen;
-    font_whiteBlack16Lite_nom.textContent = arrayRestaurant[index].nombre;
-    font_whiteBlack16Lite_tiempo.textContent = arrayRestaurant[index].tiempo+" min";
+    imgRestaurant.src = arrayRestaurantPrint[index].imagen;
+    font_whiteBlack16Lite_nom.textContent = arrayRestaurantPrint[index].nombre;
+    font_whiteBlack16Lite_tiempo.textContent = arrayRestaurantPrint[index].tiempo+" min";
 
     banner_section_Cards.appendChild (card_restaurant);
         card_restaurant.appendChild (boxImageCenter);
@@ -513,6 +641,9 @@ for (let index = 0; index < arrayRestaurant.length; index++) {
     });
 
 }
+
+
+
 
 // Carga las tarjetas de los productos del restaurante en el popup menu al abrir el restaurante
 const construirPopProducts = (restaurante) => {
@@ -610,7 +741,7 @@ const construirPopProducts = (restaurante) => {
             button_green.appendChild (spanButton_green);
             tituloMenu.textContent = "Menú y precios "+restaurante [i].restaurant;
 
-            console.log (restaurante [i].nombre);
+  
             spanButton_green.textContent = "add";
             desc_font_whiteBlack16.textContent     = restaurante [i].nombre;
             desc_font_whiteBlack16_price.textContent = "$ "+restaurante [i].price;   
@@ -681,7 +812,6 @@ const construirPopProducts = (restaurante) => {
 
 // Construyo el carrito con los restaurantes y sus productos comprados en el carrito
 const construirPopCarrito = (arrayCarrito) => {
-
     
     //Primero ordeno el array arrayCarrito con idRestaurante
     arrayCarrito = arrayCarrito.sort(function (first, last){

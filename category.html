@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     <link href = "assets/fonts/fontGoldplay.css" rel = "stylesheet" type = "text/css" />
     <link href = "assets/fonts/fontGoldAlt-PlayBold.css" rel = "stylesheet" type = "text/css" />
     <link rel="stylesheet" href="css/main.css">
+
 </head>
 <body>
 
@@ -44,11 +47,11 @@
                     </div>
         
                     <div class="boxFlex450 inCenter"> 
-                    <a href="#" class="inCenter">
+                    <a class="inCenter">
                         
                         <div class="green_button">
 
-                            <span class="material-symbols-outlined center_ico_white" id="action_menu_shop">shopping_cart</span>
+                            <span class="material-symbols-outlined center_ico_white action_menu_shop" id="action_menu_shop">shopping_cart</span>
                             
                             
                             <a class="font-whiteBold" id="totalCarrito">0</a>
@@ -66,7 +69,7 @@
 
 
     <div class="title_secundary_red">
-        <span class="fontRed24Bold title_section">Restaurantes a Domicilio</span>
+        <span class="fontRed24Bold title_section" id="categoryTextRed">Restaurantes a Domicilio</span>
 
     </div>
 
@@ -114,7 +117,7 @@
     <div class="banner_section borderGray">
 
         <div class="positionCabSection">
-            <a class="font-whiteBlack18 text_category">Restaurantes cerca de mi</a>
+            <a class="font-whiteBlack18 text_category" id="categoryTextBlack">Restaurantes cerca de mi</a>
         </div>
 
     
@@ -127,7 +130,7 @@
 
 
 
-
+    <!-- Modal de productos de cada restaurante -->
     <section class="modalRestaurant">
         <div class="modalRestaurant__container">
 
@@ -265,78 +268,78 @@
             <div class="line_gray"></div>
             <div class="container_minisection_category">
 
-                <a class="list_category_modal" href="./category.html">
-                   <div class="container-textcategory_modal">
-                        <div class="font-whiteBlack16">Restaurantes</div>
-                   </div>   
-                   <div class="container-ico">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
-                   </div>
-                </a>
-
-                <a class="list_category_modal" href="#">
+                <a class="list_category_modal" href="./category.html#Restaurantes">
                     <div class="container-textcategory_modal">
-                         <div class="font-whiteBlack16">Super</div>
-                    </div>   
-                    <div class="container-ico">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
-                    </div>
-                 </a>
-
-                 <a class="list_category_modal" href="#">
-                    <div class="container-textcategory_modal">
-                         <div class="font-whiteBlack16">Farmacia</div>
-                    </div>   
-                    <div class="container-ico">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
-                    </div>
-                 </a>
-               
-                 <a class="list_category_modal" href="#">
-                    <div class="container-textcategory_modal">
-                         <div class="font-whiteBlack16">Express</div>
+                         <div class="font-whiteBlack16">Restaurantes</div>
                     </div>   
                     <div class="container-ico">
                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
                     </div>
                  </a>
  
-                 <a class="list_category_modal" href="#">
+                 <a class="list_category_modal" href="./category.html#Super">
                      <div class="container-textcategory_modal">
-                          <div class="font-whiteBlack16">Tiendas</div>
+                          <div class="font-whiteBlack16">Super</div>
                      </div>   
                      <div class="container-ico">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
                      </div>
                   </a>
  
-                  <a class="list_category_modal" href="#">
+                  <a class="list_category_modal" href="./category.html#Farmacia">
                      <div class="container-textcategory_modal">
-                          <div class="font-whiteBlack16">Licores</div>
+                          <div class="font-whiteBlack16">Farmacia</div>
                      </div>   
                      <div class="container-ico">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
                      </div>
-                  </a>                               
-              
-                  <a class="list_category_modal" href="#">
-                    <div class="container-textcategory_modal">
-                         <div class="font-whiteBlack16">Travel</div>
-                    </div>   
-                    <div class="container-ico">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
-                    </div>
-                 </a>
- 
-                 <a class="list_category_modal" href="#">
+                  </a>
+                
+                  <a class="list_category_modal" href="./category.html#Express">
                      <div class="container-textcategory_modal">
-                          <div class="font-whiteBlack16">Turbo-Fresh</div>
+                          <div class="font-whiteBlack16">Express</div>
                      </div>   
                      <div class="container-ico">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
                      </div>
-                 </a>
- 
+                  </a>
+  
+                  <a class="list_category_modal" href="./category.html#Tiendas">
+                      <div class="container-textcategory_modal">
+                           <div class="font-whiteBlack16">Tiendas</div>
+                      </div>   
+                      <div class="container-ico">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
+                      </div>
+                   </a>
+  
+                   <a class="list_category_modal" href="./category.html#Licores">
+                      <div class="container-textcategory_modal">
+                           <div class="font-whiteBlack16">Licores</div>
+                      </div>   
+                      <div class="container-ico">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
+                      </div>
+                   </a>                               
+               
+                   <a class="list_category_modal" href="./category.html#Travel">
+                     <div class="container-textcategory_modal">
+                          <div class="font-whiteBlack16">Travel</div>
+                     </div>   
+                     <div class="container-ico">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
+                     </div>
+                  </a>
+  
+                  <a class="list_category_modal" href="./category.html#Turbo">
+                      <div class="container-textcategory_modal">
+                           <div class="font-whiteBlack16">Turbo-Fresh</div>
+                      </div>   
+                      <div class="container-ico">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#6A696E" d="M7.38 21.01c.49.49 1.28.49 1.77 0l8.31-8.31a.996.996 0 000-1.41L9.15 2.98c-.49-.49-1.28-.49-1.77 0s-.49 1.28 0 1.77L14.62 12l-7.25 7.25c-.48.48-.48 1.28.01 1.76z"></path></svg>
+                      </div>
+                  </a>
+  
             </div>
 
 
@@ -344,9 +347,9 @@
 
     </section>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./script_dome_category.js"></script>
     <script src="./script_actions.js"></script>
-    
 </body>
 </html>
 

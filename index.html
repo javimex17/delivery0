@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     <link href = "assets/fonts/fontGoldplay.css" rel = "stylesheet" type = "text/css" />
     <link href = "assets/fonts/fontGoldAlt-PlayBold.css" rel = "stylesheet" type = "text/css" />
     <link rel="stylesheet" href="css/main.css">
@@ -33,6 +35,7 @@
                         <div class="logo_center">
                             <a class="fontBlack16Red" href="./index.html">Delivery </a>
                         </div>
+
                     </div>
         
                     <div class="boxFlex450 inCenter">
@@ -45,11 +48,16 @@
                     </div>
         
                     <div class="boxFlex450 inCenter"> 
-                    <a href="#" class="inCenter">
+                    <a class="inCenter">
+                        
                         <div class="green_button">
-                            <span class="material-symbols-outlined center_ico_white">shopping_cart</span>
-                            <a class="font-whiteBold">0</a>
+
+                            <span class="material-symbols-outlined center_ico_white action_menu_shop" id="action_menu_shop">shopping_cart</span>
+                            
+                            
+                            <a class="font-whiteBold" id="totalCarrito">0</a>
                         </div>
+                        
                     </a>
                     </div>
         
@@ -116,9 +124,13 @@
             <a class="font-whiteBlack18 text_category">Top de restaurantes de México</a>
         </div>
 
-        <div class="banner_section_Cards">
+        <div class="banner_section_Cards" id="banner_section_Cards">
 
+
+        <!--    
           <div class="card_top_restaurant">  
+
+
             <div class="boxImageCenter">
                 <div class="boxImage">
                   <img src="assets/restaurants/mcdonalds.webp" alt="Cargando imagen...">
@@ -215,10 +227,133 @@
                 <a class="font-whiteGray14Lite text_category">30 min</a>
             </div>
           </div>            
+        -->
+
 
         </div>
 
      </div>
+
+     <!--   Modal del restaurante -->
+     <section class="modalRestaurant">
+        <div class="modalRestaurant__container">
+
+            <div class="container_minisection_category">
+
+                <a class="section_modal" href="./category.html">
+
+                   <div class="container-textcategory_modal">
+                        <div class="font-whiteBlack16" id="tituloMenu">Menú y precios</div>
+                   </div>   
+                 
+                   <div class="container-textcategory_modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="modal__closeRestaurant" width="24" height="24" fill="none" viewBox="0 0 24 24" class="sc-jjj11z-1 gDckCs"><path fill="#6A696E" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm4.3 14.3a.996.996 0 01-1.41 0L12 13.41 9.11 16.3a.996.996 0 11-1.41-1.41L10.59 12 7.7 9.11A.996.996 0 119.11 7.7L12 10.59l2.89-2.89a.996.996 0 111.41 1.41L13.41 12l2.89 2.89c.38.38.38 1.02 0 1.41z"></path></svg>                
+                   </div>
+                
+                </a>
+            <!--
+              
+            -->
+                <div class="seccion_product_modal" id="seccion_product_modal">     
+                    
+                    
+                    <div class="card_product">
+
+                        <div class="boxImageProductCenter">
+                            <div class="boxImageProduct">
+                                    <img class="imgRestaurant" src="assets/restaurants/mcdonalds.webp" alt="Cargando imagen...">
+                                    <span class="center_ico_white">1</span>
+                            </div>          
+                        </div>    
+                      
+
+                        <div class="box_card_Description">
+                            <div class="font-whiteBlack16 overflow-visible">Alimentos alimentos alimentos</div>
+                            <div class="font-grayBold overflow-visible">Descripción Descripción Alimento Alimento</div>
+                        </div>
+
+                        <div class="box_card_Quantity">
+                            <div class="green_button_circle_Quantity">
+                                <span class="center_ico_white">1</span>
+                            </div>
+                        </div>
+                        <div class="box_card_Description_price">
+                            <div class="font-whiteBlack16 overflow-visible">$100.00</div>
+                        </div>
+                        <div class="box_card_ButtonAdd">
+                            <div class="green_button_circle">
+                                <span class="material-symbols-outlined center_ico_white">add</span>
+                            </div>
+                        </div>
+
+                        <div class="card_edit_product">
+                            
+                                <div class="material-symbols-outlined">add</div>
+                                <div class="font-white14LiteCard">10</div>
+                                <div class="material-symbols-outlined">remove</div>
+    
+                        </div>
+                   
+
+                    </div>
+                    
+                    
+
+                </div>
+
+            </div>
+            
+            <div class="container_minisection_right">
+                <a class="red_pannel_total font-whiteBold" id="captionTotal">Total $ 0.00</a>
+            </div>
+
+            <div class="line_gray"></div>
+            <div class="container_minisection">
+                <a class="button_green font-whiteBold" id="closeAddRestaurant" href="#">Añadir a la compra</a>
+            </div>
+        </div>
+    </section>
+
+
+
+     <!--   Ventana modal para pagar el carrito  -->
+     <section class="modal_menu">
+        <div class="modal_menu__container">
+
+            <div class="container_minisection_category">
+
+                <a class="section_modal" href="./category.html">
+                    <div class="container-textcategory_modal">
+                        <div class="font-whiteBlack16" id="tituloMenu">Tu canasta</div>
+                    </div>   
+
+                    <div class="container-textcategory_modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" id="modal_menu__close" width="24" height="24" fill="none" viewBox="0 0 24 24" class="sc-jjj11z-1 gDckCs"><path fill="#6A696E" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm4.3 14.3a.996.996 0 01-1.41 0L12 13.41 9.11 16.3a.996.996 0 11-1.41-1.41L10.59 12 7.7 9.11A.996.996 0 119.11 7.7L12 10.59l2.89-2.89a.996.996 0 111.41 1.41L13.41 12l2.89 2.89c.38.38.38 1.02 0 1.41z"></path></svg>
+                        
+                    </div>
+                </a>
+
+                <div class="seccion_product_modalShop" id="seccion_product_modalShop">     
+                    <div class="card_RestaurantShop">
+
+                  
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="container_minisection_right">
+                <a class="red_pannel_total font-whiteBold" id="captionModalTotal">Total $ 0.00</a>
+            </div>
+
+            <div class="line_gray"></div>
+            <div class="container_minisection">
+                <a id="closeCarritoPago" class="button_green font-whiteBold" href="#">Realizar Pago</a>
+            </div>
+            
+        </div>
+    </section>
+
 
     <!-- Ventana modal hamburguesa izquierda--> 
     <section class="modal">
@@ -238,7 +373,7 @@
             <div class="line_gray"></div>
             <div class="container_minisection_category">
 
-                <a class="list_category_modal" href="./category.html">
+                <a class="list_category_modal" href="./category.html#Restaurantes">
                    <div class="container-textcategory_modal">
                         <div class="font-whiteBlack16">Restaurantes</div>
                    </div>   
@@ -247,7 +382,7 @@
                    </div>
                 </a>
 
-                <a class="list_category_modal" href="#">
+                <a class="list_category_modal" href="./category.html#Super">
                     <div class="container-textcategory_modal">
                          <div class="font-whiteBlack16">Super</div>
                     </div>   
@@ -256,7 +391,7 @@
                     </div>
                  </a>
 
-                 <a class="list_category_modal" href="#">
+                 <a class="list_category_modal" href="./category.html#Farmacia">
                     <div class="container-textcategory_modal">
                          <div class="font-whiteBlack16">Farmacia</div>
                     </div>   
@@ -265,7 +400,7 @@
                     </div>
                  </a>
                
-                 <a class="list_category_modal" href="#">
+                 <a class="list_category_modal" href="./category.html#Express">
                     <div class="container-textcategory_modal">
                          <div class="font-whiteBlack16">Express</div>
                     </div>   
@@ -274,7 +409,7 @@
                     </div>
                  </a>
  
-                 <a class="list_category_modal" href="#">
+                 <a class="list_category_modal" href="./category.html#Tiendas">
                      <div class="container-textcategory_modal">
                           <div class="font-whiteBlack16">Tiendas</div>
                      </div>   
@@ -283,7 +418,7 @@
                      </div>
                   </a>
  
-                  <a class="list_category_modal" href="#">
+                  <a class="list_category_modal" href="./category.html#Licores">
                      <div class="container-textcategory_modal">
                           <div class="font-whiteBlack16">Licores</div>
                      </div>   
@@ -292,7 +427,7 @@
                      </div>
                   </a>                               
               
-                  <a class="list_category_modal" href="#">
+                  <a class="list_category_modal" href="./category.html#Travel">
                     <div class="container-textcategory_modal">
                          <div class="font-whiteBlack16">Travel</div>
                     </div>   
@@ -301,7 +436,7 @@
                     </div>
                  </a>
  
-                 <a class="list_category_modal" href="#">
+                 <a class="list_category_modal" href="./category.html#Turbo">
                      <div class="container-textcategory_modal">
                           <div class="font-whiteBlack16">Turbo-Fresh</div>
                      </div>   
@@ -318,10 +453,10 @@
     </section>
 
 
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="./script.js"></script>
-
 <script src="./script_dom_Home.js"></script>
+<script src="./script_dome_category.js"></script>
 <script src="./script_actions.js"></script>
 
 
