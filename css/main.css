@@ -729,6 +729,7 @@ a {
     align-content: space-between;
     align-items: flex-start;
     justify-content: space-between;
+    cursor : pointer; 
 }
 
 .list_category_modal {
