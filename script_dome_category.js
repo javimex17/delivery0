@@ -1,5 +1,5 @@
 
-
+// Aquí capturo todos las constantes que necesito para hacer la "magia" con el DOM
 const openModalRestaurant       = document.getElementsByClassName ('action_menuRestaurant');
 const modalRestaurant           = document.querySelector  ('.modalRestaurant');
 const closeModalRestaurant      = document.querySelector  ('.modal__closeRestaurant');
@@ -12,20 +12,170 @@ const closeModalGeneral         = document.querySelector  ('.modal__closeRestaur
 const categoryTextBlack         = document.getElementById ('categoryTextBlack');
 const categoryTextRed           = document.getElementById ('categoryTextRed');
 
-
 const arrayRestaurant           = [];
 const arrayRestaurant10         = [];
+const arrayProductRestaurant    = [];
 const arrayShopCategory         = [];
-let arrayRestaurantPrint        = [];
+let   arrayRestaurantPrint      = [];
 const arrayProductFilter        = [];
-let arrayCarrito                = [];
+let   arrayCarrito              = [];
+
+// Clase Restaurant con el constructor
+class Restaurant {
+    constructor (id, nombre, imagen, top, tiempo, category) {
+        this.id = id,
+        this.nombre = nombre,
+        this.imagen = imagen,
+        this.top = top,
+        this.tiempo = tiempo,
+        this.category = category
+        return this;
+    }
+}
+
+class productRestaurant {
+    constructor (idRestaurant, idProduct, restaurant, category, nombre, image, price){
+    this.idRestaurant = idRestaurant;
+    this.idProduct = idProduct,
+    this.restaurant = restaurant,
+    this.category = category,
+    this.nombre = nombre,
+    this.image = image,
+    this.price = price
+    return this;
+    }
+}
+
+// Esta es la función para añadir al objeto Restaurant
+const addRestaurant = (id, nombre, imagen, top, tiempo, category) => {
+    const restaurantAdd = new Restaurant(id,nombre,imagen, top, tiempo, category)
+    arrayRestaurant.push (restaurantAdd);
+}
+
+// Esta es la función para añadir al objeto productRestaurant
+const addproductRestaurant = (idRestaurant, idProduct, restaurant, category, nombre, image, price) => {
+    const productRestaurantAdd = new productRestaurant(idRestaurant, idProduct, restaurant, category, nombre, "./assets/restaurants/"+restaurant+"/"+nombre+".png", price)
+    arrayProductRestaurant.push (productRestaurantAdd);
+}
+
+// Esta función construye las primeras tarjetas de los restaurantes top10 del index.ini.
+// Llamo a esta función en dataStoreProduct después de traerme los productos del archivo products.json.
+const construirInicio = () => {
 
 //Obtengo la página donde estoy  index o category
 paginaActual = window.location.pathname;
 
-//Si paso a catégori necesito obtener qué categoría quiero mostrar
+//Si paso a category necesito obtener qué categoría quiero mostrar
+//category es una variable que utilizo 
 let category = "";
 category = window.location.hash.replace ("#", "");
+
+
+    if ( (paginaActual == "/index.html" ) || (paginaActual == "/" ) ) {
+        arrayRestaurantPrint = filtrarRestaurant10 (5);
+    }
+    else {
+        arrayRestaurantPrint = filtrarCategory (category)
+        categoryTextBlack.textContent = category+" cerca de mi";
+        categoryTextRed.textContent = category+" a domicilio";
+    }
+
+        let banner_section_Cards = document.getElementById ("banner_section_Cards")
+
+        
+    for (let index = 0; index < arrayRestaurantPrint.length; index++) {
+
+        let card_restaurant = document.createElement ("div");
+        let boxImageCenter = document.createElement ("div");
+        let boxImage = document.createElement ("div");
+        let imgRestaurant = document.createElement ("img");
+        let boxNomRestaurant_bnd_nom = document.createElement ("div");
+        let font_whiteBlack16Lite_nom = document.createElement ("a");
+        let boxNomRestaurant_bnd_tiempo = document.createElement ("div");
+        let font_whiteBlack16Lite_tiempo = document.createElement ("a");
+
+        card_restaurant.className = "card_restaurant action_menuRestaurant";
+        boxImageCenter.className = "boxImageCenter";
+        boxImage.className = "boxImage";
+        imgRestaurant.className = "imgRestaurant";
+
+    
+        boxNomRestaurant_bnd_nom.className = "boxNomRestaurant_bnd";
+        font_whiteBlack16Lite_nom.className = "font-whiteGray14Lite";
+    // font_whiteBlack16Lite_nom.setAttribute ("id", "NomRestaurant");
+        card_restaurant.setAttribute ("id", arrayRestaurantPrint[index].nombre);
+
+        boxNomRestaurant_bnd_tiempo.className = "boxNomRestaurant_bnd";
+        font_whiteBlack16Lite_tiempo.className = "font-whiteGray14Lite";
+
+        imgRestaurant.src = arrayRestaurantPrint[index].imagen;
+        font_whiteBlack16Lite_nom.textContent = arrayRestaurantPrint[index].nombre;
+        font_whiteBlack16Lite_tiempo.textContent = arrayRestaurantPrint[index].tiempo+" min";
+
+        banner_section_Cards.appendChild (card_restaurant);
+            card_restaurant.appendChild (boxImageCenter);
+                boxImageCenter.appendChild (boxImage);
+                    boxImage.appendChild (imgRestaurant);
+            card_restaurant.appendChild (boxNomRestaurant_bnd_nom);
+                boxNomRestaurant_bnd_nom.appendChild (font_whiteBlack16Lite_nom);
+            card_restaurant.appendChild (boxNomRestaurant_bnd_tiempo);
+                boxNomRestaurant_bnd_nom.appendChild (font_whiteBlack16Lite_tiempo);
+
+        const openModalRestaurant  = document.getElementsByClassName('action_menuRestaurant');
+
+        // Creo este click para que al pulsar en una card de restaurante abra un modal y cargo los productos
+        openModalRestaurant [index].addEventListener ('click',(e)=>{
+            e.preventDefault();
+            totalProducts = 0;
+            modalRestaurant.classList.add ('modalRestaurant--show');
+        construirPopProducts ( filtrarProduct (openModalRestaurant[index].id) );
+        });
+
+    }
+
+}
+
+// Me traigo los datos de store.json a un arreglo de objetos
+const dataStore = async () => {
+  try {
+    const response  = await fetch ("./data/store.json");
+    const dataStore = await response.json ();
+
+    dataStore.forEach ( (post) => {
+        addRestaurant (post.id, post.nombre, post.imagen, post.top, post.tiempo, post.category);
+    });
+  
+  } catch (error) {
+    console.log (error);
+
+  }
+};
+
+// Me traigo los datos de products.json a un arreglo de objetos
+const dataStoreProduct = async () => {
+    try {
+      const response  = await fetch ("./data/products.json");
+      const dataStore = await response.json ();
+  
+      dataStore.forEach ( (post) => {
+
+          addproductRestaurant  (post.idRestaurant, post.idProduct, post.restaurant, post.category, post.nombre, post.image, post.price);
+      });
+      construirInicio ();
+    
+    } catch (error) {
+      console.log (error);
+  
+    }
+  };
+  
+  
+// Ejecuto el dataStore para usar los datos del store.json en el arrayRestaurant
+dataStore ();
+dataStoreProduct ();
+
+
+
 
 // Función de notificación
 const notifica = (mensaje) => {
@@ -35,7 +185,6 @@ const notifica = (mensaje) => {
         duration: 3000,
         gravity: 'bottom',
         position: 'center',
-        backgroundColor: "linear-gradient(to right, #ff441f, #ff441f)",
     }).showToast ();
 }
 
@@ -68,201 +217,6 @@ calcularTotalCarrito (arrayCarrito);
 let totalProducts = 0;
 let contadorID = 0;
 
-
-
-const arrayNomTurbo = [
-    ["Wallmart", 4, "30","Turbo"]
-]
-
-const arrayNomTravel = [
-    ["Wego", 4, "30", "Travel"]
-]
-
-
-const arrayNomLicores = [
-    ["La Europea", "4", "30", "Licores"], 
-    ["Pari", 4, "30", "Licores"],
-]
-
-const arrayNomTiendas = [
-    ["Wallmart", 4, "30", "Tiendas"]
-
-]
-
-const arrayNomExpress = [
-    ["Wallmart", 4, "30", "Express"]
-]
-
-const arrayNomFarmacia = [
-    ["Benavides", 4, "30", "Farmacia"], 
-    ["Farmacias Similares", 4, "30", "Farmacia"],
-    ["FarmaTodo", 5, "30", "Farmacia"],
-    ["Farmacias Guadalajara", 5, "25", "Farmacia"],
-]
-
-const arrayNomSuper = [
-    ["Wallmart", 4, "30", "Super"], 
-    ["Soriana", 4, "30", "Super"],
-    ["Costco", 5, "30", "Super"],
-    ["Chedraui", 5, "25", "Super"],
-]
-
-const arrayNomRestaurant = [
-    ["Franco Cocina Honesta", 4.2, "30", "Restaurantes"],
-    ["Taquearte", 4, "30", "Restaurantes"],
-    ["McDonald's", 5, "30", "Restaurantes"],
-    ["Kabuki Sushi", 5, "25", "Restaurantes"],
-    ["Nimi's", 4.5, "20", "Restaurantes"],
-    ["Shake Shack", 4, "40", "Restaurantes"],
-    ["Little Caesars", 4.5, "30", "Restaurantes"],
-    ["El Japonez", 5, "34", "Restaurantes"],
-    ["Taco Naco", 4.5, "30", "Restaurantes"],
-    ["Sushi Itto", 4, "45", "Restaurantes"],
-    ["Las Alitas", 4.5, "40", "Restaurantes"],
-    ["Hooters", 5, "30", "Restaurantes"],
-    ["El Tizoncito", 4, "30", "Restaurantes"]
-  //  ["Papa Johns", "4.3", "35"]
-/*
-    ["KFC", "4.3", "35"],
-    ["Mr Blanco's", "4.5", "45"],
-    ["Burger King", "4", "34"],
-    ["Taquería Orinoco", "4", "32"],
-    ["Sliders", "4.4", "30"],
-    ["Tori Tori", "4,5", "35"],
-    ["Koku", "3", "35"],
-    ["We Love Burgers", "4", "32"],
-    ["Carl's Jr.", "5", "30"]*/
-];
-
-// Array uniendo los array de nombres de categorías
-const arrayNom = [
-    ...arrayNomRestaurant,
-    ...arrayNomTiendas,
-    ...arrayNomTurbo,
-    ...arrayNomTravel,
-    ...arrayNomLicores,
-    ...arrayNomExpress,
-    ...arrayNomFarmacia,
-    ...arrayNomSuper
-    ]
-
-
-    
-
-const arrayProductRestaurant = [
-    ["1","1","Franco Cocina Honesta","Promo del mes","Bowl de pollo","240"],
-    ["1","2","Franco Cocina Honesta","Promo del mes","Ensalada vegetales","192"],
-    ["1","3","Franco Cocina Honesta","Entradas","Sopa Marroquí","76"],
-    ["1","4","Franco Cocina Honesta","Entradas","Tostada de vegetales","103"],
-    ["1","5","Franco Cocina Honesta","Entradas","Tostada de trucha","119"],
-    ["1","6","Franco Cocina Honesta","Entradas","Crema de Papa","76"],
-    ["1","7","Franco Cocina Honesta","Entradas","Tartar de salmón","124"],
-    ["1","8","Franco Cocina Honesta","Bowls","Bowl vegano","150"],
-    ["1","9","Franco Cocina Honesta","Bowls","Bowl chimichurri","160"],
-    ["1","10","Franco Cocina Honesta","Bowls","Bowl de salmón","240"],
-    ["1","11","Franco Cocina Honesta","Bowls","Bowl de pollo","240"],
-    ["1","12","Franco Cocina Honesta","Sándwiches","Sándwich de pollo","136"],
-    ["1","13","Franco Cocina Honesta","Sándwiches","Sándwich de milanesa","136"],
-    ["1","14","Franco Cocina Honesta","Sándwiches","Sándwich de pavo","136"],
-    ["2","1","Taquearte","Promociones","Combo Ta Con Todo","170"],
-    ["2","2","Taquearte","Promociones","Combo El Cuarteto Perfecto","291"],
-    ["2","3","Taquearte","Promociones","Combo Pepsi Con Todo","532"],
-    ["2","4","Taquearte","Fogonadas","Fogonada Pastor","169"],
-    ["2","5","Taquearte","Fogonadas","Fogonada Bistec","169"],
-    ["2","6","Taquearte","Fogonadas","Fogonada Costilla","169"],
-    ["2","7","Taquearte","Tacos","Taco de Pastor","39"],
-    ["2","8","Taquearte","Tacos","Taco de Bistec","49"],
-    ["2","9","Taquearte","Tacos","Taco de Costilla","49"],
-    ["3","1","McDonald's","Mctrios Comida","Mctrío McCrispy","160"],
-    ["3","2","McDonald's","Mctrios Comida","Mctrío Big Mac","160"],
-    ["3","3","McDonald's","Mctrios Comida","McTrío Signature","160"],
-    ["3","4","McDonald's","Mctrios Comida","McTrío Mcnifica","160"],
-    ["4","1","Kabuki Sushi","Promo","Combo California","75"],
-    ["4","2","Kabuki Sushi","Promo","Tata Maki","180"],
-    ["4","3","Kabuki Sushi","Promo","Cilantro","172"],
-    ["4","4","Kabuki Sushi","Promo","Kiwi","172"],
-    ["4","5","Kabuki Sushi","Sushi","Kani Roll","86"],
-    ["4","6","Kabuki Sushi","Sushi","Tiger Roll","172"],
-    ["4","7","Kabuki Sushi","Sushi","Kabuki Roll","86"],
-    ["4","8","Kabuki Sushi","Sushi","Dragon Roll","86"],
-    ["5","1","Nimi's","Pitas","Pita de pollo","135"],
-    ["5","2","Nimi's","Pitas","Pita de Falafel","103"],
-    ["5","3","Nimi's","Pitas","Pita Kebab","135"],
-    ["5","4","Nimi's","Humus","Hummus Kebab","127"],
-    ["5","5","Nimi's","Humus","Hummus Pollo","127"],
-    ["5","6","Nimi's","Humus","Hummus Falafel","100"],
-    ["6","1","Shake Shack","Burgers","Avocado Bacon Burger","190"],
-    ["6","2","Shake Shack","Burgers","ShackBurger","118"],
-    ["6","3","Shake Shack","Burgers","Smokeshack","169"],
-    ["6","4","Shake Shack","Burgers","Shroom Burger","175"],
-    ["6","5","Shake Shack","Burgers","Shack Stack","220"],
-    ["6","6","Shake Shack","Papas","Papas","67"],
-    ["6","7","Shake Shack","Papas","Papas Con Queso","110"],
-    ["6","8","Shake Shack","Papas","Papas Con Queso Y Tocino","150"],
-    ["7","1","Little Caesars","Paquetes","Paquete Super Cheese","215"],
-    ["7","2","Little Caesars","Paquetes","Paquete Fiesta","249"],
-    ["7","3","Little Caesars","Paquetes","Combo Trío","319"],
-    ["7","4","Little Caesars","Paquetes","Paquete Especial","529"],
-    ["7","5","Little Caesars","Paquetes","Combo Pizzamanía","259"],
-    ["7","6","Little Caesars","Pizzas","Pizza Pepperoni","115"],
-    ["7","7","Little Caesars","Pizzas","Pizza de Queso","109"],
-    ["7","8","Little Caesars","Pizzas","Pizza Ultimate Supreme","179"],
-    ["7","9","Little Caesars","Pizzas","Pizza Three Meat Treat","179"],
-    ["7","10","Little Caesars","Pizzas","Pizza Super Cheese","209"],
-    ["8","1","El Japonez","Entradas","Gyosas","120"],
-    ["8","2","El Japonez","Entradas","Robalo Roca","361"],
-    ["8","3","El Japonez","Entradas","Rollitos Tokio","268"],
-    ["8","4","El Japonez","Entradas","Spring Roll","169"],
-    ["8","5","El Japonez","Brochetas","Brocheta Res","190"],
-    ["8","6","El Japonez","Brochetas","Brocheta de Salmón","540"],
-    ["8","7","El Japonez","Brochetas","Brocheta Yakitori","100"],
-    ["9","1","Taco Naco","Entradas","Chicharrón de queso","90"],
-    ["9","2","Taco Naco","Entradas","Guacamole","70"],
-    ["9","3","Taco Naco","Entradas","Tuetanos","130"],
-    ["9","4","Taco Naco","Entradas","Nopales","50"],
-    ["9","5","Taco Naco","Tacos","Taco Picaña","60"],
-    ["9","6","Taco Naco","Tacos","Taco de Sirloin","60"],
-    ["9","7","Taco Naco","Tacos","Taco New York","60"],
-    ["9","8","Taco Naco","Tacos","Taco de Rib Eye","60"],
-    ["10","1","Sushi Itto","Entradas","Edamames","90"],
-    ["10","2","Sushi Itto","Entradas","Vota","90"],
-    ["10","3","Sushi Itto","Entradas","Camarones","190"],
-    ["10","4","Sushi Itto","Entradas","Baby Squid","130"],
-    ["10","5","Sushi Itto","Ramen","Chopu-men","200"],
-    ["10","6","Sushi Itto","Ramen","Umi-men","200"],
-    ["10","7","Sushi Itto","Ramen","Ebi-men","200"],
-    ["10","8","Sushi Itto","Ramen","Kotsu-men","200"],
-    ["11","1","Las Alitas","Alitas","Boneless Dobles","90"],
-    ["11","2","Las Alitas","Alitas","Platón Boneless","80"],
-    ["11","3","Las Alitas","Alitas","Boneless Snack","90"],
-    ["11","4","Las Alitas","Alitas","Magic Mike","100"],
-    ["11","5","Las Alitas","Alitas","Strippers","70"],
-    ["11","6","Las Alitas","Hamburguesas","Devil","190"],
-    ["11","7","Las Alitas","Hamburguesas","Buffalo","200"],
-    ["11","8","Las Alitas","Hamburguesas","Clásica","210"],
-    ["11","9","Las Alitas","Hamburguesas","Millonaria","200"],
-    ["12","1","Hooters","Entradas","Mac&Cheese","80"],
-    ["12","2","Hooters","Entradas","Caesar Salad","80"],
-    ["12","3","Hooters","Entradas","Bacon Wraped","80"],
-    ["12","4","Hooters","Wings","Wings Original","300"],
-    ["12","5","Hooters","Wings","Wings Medium","300"],
-    ["12","6","Hooters","Wings","Wings Large","300"],
-    ["12","7","Hooters","Wings","Wings Small","300"],
-    ["13","1","El Tizoncito","Entradas","Chicharrón de queso","40"],
-    ["13","2","El Tizoncito","Entradas","Guacamole","50"],
-    ["13","3","El Tizoncito","Tacos","Orden de Chorizo","140"],
-    ["13","4","El Tizoncito","Tacos","Orden de Pollo","150"],
-    ["13","5","El Tizoncito","Tacos","Orden de Bistec","130"]
-
-    /*
-    ["14","1","Papa Jhons","Pizza","Margarita","200"],
-    ["14","2","Papa Jhons","Pizza","Marinara","240"],
-    ["14","3","Papa Jhons","Pizza","Diavola","250"],
-    ["14","4","Papa Jhons","Pizza","Venice","260"],
-    ["14","5","Papa Jhons","Pizza","Ricotta","250"]
-    */
-   
-]
 
 const filtrarDesc = query => {
     return arrayNombre.filter((param) =>
@@ -307,30 +261,9 @@ const ordenPrecio = [
     ["Mas de 125", "$$$$"]
 ]
 
-class Restaurant {
-    constructor (id, nombre, imagen, top, tiempo, category) {
-        this.id = id,
-        this.nombre = nombre,
-        this.imagen = imagen,
-        this.top = top,
-        this.tiempo = tiempo,
-        this.category = category
-        return this;
-    }
-}
 
-class productRestaurant {
-    constructor (idRestaurant, idProduct, restaurant, category, nombre, image, price){
-    this.idRestaurant = idRestaurant;
-    this.idProduct = idProduct,
-    this.restaurant = restaurant,
-    this.category = category,
-    this.nombre = nombre,
-    this.image = image,
-    this.price = price
-    return this;
-    }
-}
+
+
 
 class carrito {
     constructor (idRestaurant, idProduct, restaurant, quantity, category, nombre, image, price ) {
@@ -378,22 +311,11 @@ modalShopOpen.addEventListener ('click',(e)=>{
 
 });
 
-
 modalShopClose.addEventListener ('click',(e)=>{
     // Cada vez que cierro el modal del carrito borro el carrito y lo guardo en el local Storage
-   /*
-    let spoilerRuta;
-    if (category.length > 0) {
-        spoilerRuta = category;
-        alert (spoiler)
-    }
-    */
-
     localStorage.removeItem ("Carrito");
     localStorage.setItem ("Carrito", JSON.stringify(arrayCarrito));
     modalShop.classList.remove ('modal_menu--show');
-
-
 });
 
 // Libero el Storage del Carrito solo cuando pulso en el botón del pago
@@ -442,9 +364,13 @@ const filtrarCategory = (category) => {
 }
 
 
+
+
+
 const filtrarRestaurant10 = (points) => {
     while (arrayRestaurant10.length > 0)
         arrayRestaurant10.pop();
+
     for (i = 0; i < arrayRestaurant.length; i++) {
        
         if ( (arrayRestaurant[i].top == parseInt (points) ) && (arrayRestaurant[i].category == "Restaurantes") ) {
@@ -459,30 +385,32 @@ const filtrarRestaurant10 = (points) => {
                 arrayRestaurant10.push (RestaurantAdd);
         }
     }
+
     return arrayRestaurant10;
 }
 
+// idRestaurant, idProduct, restaurant, category, nombre, image, price
 
 const filtrarProduct = (nombre) => {
     
     while (arrayProductFilter.length > 0)
         arrayProductFilter.pop();
     for (i = 0; i < arrayProductRestaurant.length; i++) {
-        if (arrayProductRestaurant[i][2] == nombre) {
+        if (arrayProductRestaurant[i].restaurant == nombre) {
 
             const productoAdd = new productRestaurant(
-                arrayProductRestaurant[i][0],
-                arrayProductRestaurant[i][1],
-                arrayProductRestaurant[i][2],
-                arrayProductRestaurant[i][3],
-                arrayProductRestaurant[i][4],  
-                "./assets/restaurants/"+arrayProductRestaurant[i][2]+"/"+arrayProductRestaurant[i][4]+".png",              
-                arrayProductRestaurant[i][5]
+                arrayProductRestaurant[i].idRestaurant,
+                arrayProductRestaurant[i].idProduct,
+                arrayProductRestaurant[i].restaurant,
+                arrayProductRestaurant[i].category,
+                arrayProductRestaurant[i].nombre,  
+                arrayProductRestaurant[i].image,              
+                arrayProductRestaurant[i].price
                 )
             arrayProductFilter.push (productoAdd);
-
         }
     }
+
     return arrayProductFilter;
 }
 
@@ -492,20 +420,13 @@ const addCarrito = (idRestaurant, idProduct, restaurant, quantity, category, nom
     arrayCarrito.push (carritoAdd);
 }
 
-const addRestaurant = (nombre, imagen, top, tiempo, category) => {
-    const restaurantAdd = new Restaurant(parseInt (++contadorID),nombre,imagen, top, tiempo, category)
-    arrayRestaurant.push (restaurantAdd);
-}
+
 
 
 // Busco producto por idRestaurant y idProduct
     function findQuantityProduct (idRestaurant, idProduct) {
         return ((arrayCarrito.idRestaurant === idRestaurant) &&  (arrayCarrito.idProduct === idProduct))
     }
-
-
-
-
 
 
 // Esta función agrega líneas en el carrito agrupándolas por artículo
@@ -542,107 +463,9 @@ const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nomb
 }
 
 
-
-
-// lleno el arrayRestaurant de arrayNom
-for (let i = 0; i < arrayNom.length; i++) {
-    
-    addRestaurant (arrayNom[i][0], 
-        "./assets/restaurants/"+arrayNom[i][3]+"_"+parseInt(i+1)+".webp",
-        arrayNom[i][1], arrayNom[i][2], arrayNom[i][3]);
-
-}
-
-
-
-
-
-
-
-
-
 const addSumTotal = (nuevoValor) => {
     totalProducts += nuevoValor;
 }
-
-
-
-
-
-// for each
-// Con este bucle recorro los restaurantes de arrayNomRestaurant y creo las tarjetas.
-// Solo necesto este bucle en la página category
-
-
-console.log (category+" "+paginaActual);
-
-if ( (paginaActual == "/index.html" ) || (paginaActual == "/" ) ) {
-    arrayRestaurantPrint = filtrarRestaurant10 (5);
-}
-else {
-
-    arrayRestaurantPrint = filtrarCategory (category)
-    categoryTextBlack.textContent = category+" cerca de mi";
-    categoryTextRed.textContent = category+" a domicilio";
-}
-
-
-
-
-    let banner_section_Cards = document.getElementById ("banner_section_Cards")
-
-    
-for (let index = 0; index < arrayRestaurantPrint.length; index++) {
-
-    let card_restaurant = document.createElement ("div");
-    let boxImageCenter = document.createElement ("div");
-    let boxImage = document.createElement ("div");
-    let imgRestaurant = document.createElement ("img");
-    let boxNomRestaurant_bnd_nom = document.createElement ("div");
-    let font_whiteBlack16Lite_nom = document.createElement ("a");
-    let boxNomRestaurant_bnd_tiempo = document.createElement ("div");
-    let font_whiteBlack16Lite_tiempo = document.createElement ("a");
-
-    card_restaurant.className = "card_restaurant action_menuRestaurant";
-    boxImageCenter.className = "boxImageCenter";
-    boxImage.className = "boxImage";
-    imgRestaurant.className = "imgRestaurant";
-
-   
-    boxNomRestaurant_bnd_nom.className = "boxNomRestaurant_bnd";
-    font_whiteBlack16Lite_nom.className = "font-whiteGray14Lite";
-   // font_whiteBlack16Lite_nom.setAttribute ("id", "NomRestaurant");
-    card_restaurant.setAttribute ("id", arrayRestaurantPrint[index].nombre);
-
-    boxNomRestaurant_bnd_tiempo.className = "boxNomRestaurant_bnd";
-    font_whiteBlack16Lite_tiempo.className = "font-whiteGray14Lite";
-
-    imgRestaurant.src = arrayRestaurantPrint[index].imagen;
-    font_whiteBlack16Lite_nom.textContent = arrayRestaurantPrint[index].nombre;
-    font_whiteBlack16Lite_tiempo.textContent = arrayRestaurantPrint[index].tiempo+" min";
-
-    banner_section_Cards.appendChild (card_restaurant);
-        card_restaurant.appendChild (boxImageCenter);
-            boxImageCenter.appendChild (boxImage);
-                boxImage.appendChild (imgRestaurant);
-        card_restaurant.appendChild (boxNomRestaurant_bnd_nom);
-            boxNomRestaurant_bnd_nom.appendChild (font_whiteBlack16Lite_nom);
-        card_restaurant.appendChild (boxNomRestaurant_bnd_tiempo);
-            boxNomRestaurant_bnd_nom.appendChild (font_whiteBlack16Lite_tiempo);
-
-    const openModalRestaurant  = document.getElementsByClassName('action_menuRestaurant');
-
-    // Creo este click para que al pulsar en una card de restaurante abra un modal y cargo los productos
-     openModalRestaurant [index].addEventListener ('click',(e)=>{
-        e.preventDefault();
-        totalProducts = 0;
-        modalRestaurant.classList.add ('modalRestaurant--show');
-       construirPopProducts ( filtrarProduct (openModalRestaurant[index].id) );
-    });
-
-}
-
-
 
 
 // Carga las tarjetas de los productos del restaurante en el popup menu al abrir el restaurante
@@ -666,7 +489,6 @@ const construirPopProducts = (restaurante) => {
 
     // Este bucle construye las tarjetas de los productos del restaurante
     for (let i = 0; restaurante.length -1; i++) {
-        
 
         let card_product = document.createElement ("div");
         let boxImageProductCenter = document.createElement ("div");
@@ -782,23 +604,6 @@ const construirPopProducts = (restaurante) => {
                             action_Total.textContent = "Total $ "+totalrestClick;
                             }
                     });
-
-
-                // Voy actualizando el carrito cada vez que pulso +
-          /*      alterCarrito (restaurante [i].idRestaurant, restaurante [i].idProduct, restaurante [i].restaurant, 1, 
-                    restaurante [i].category, restaurante [i].nombre, restaurante [i].image, restaurante[i].price, arrayCarrito);   */
-                   
-                // Muestro la cantidad en cada tarjeta que ya hay en el carrito de ese producto  
-          /*
-                arrayCarrito.forEach(object => {
-                    if ( (object.idRestaurant === restaurante [i].idRestaurant) && (object.idProduct === restaurante [i].idProduct) ) {
-                        green_button_circle_Quantity.appendChild (center_ico_white_quantity);
-                        center_ico_white_quantity.textContent = object.quantity;
-                    }
-                });
-            */
-            
-
                 
                 // Actualizo el total del Carrito 
                 calcularTotalCarrito (arrayCarrito);
