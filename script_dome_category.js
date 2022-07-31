@@ -58,8 +58,14 @@ const addproductRestaurant = (idRestaurant, idProduct, restaurant, category, nom
     arrayProductRestaurant.push (productRestaurantAdd);
 }
 
-// Esta función construye las primeras tarjetas de los restaurantes top10 del index.ini.
-// Llamo a esta función en dataStoreProduct después de traerme los productos del archivo products.json.
+
+
+const reload = (section) => {
+    location.href= section;
+    location.reload();
+}
+
+
 const construirInicio = () => {
 
 //Obtengo la página donde estoy  index o category
@@ -175,8 +181,6 @@ dataStore ();
 dataStoreProduct ();
 
 
-
-
 // Función de notificación
 const notifica = (mensaje) => {
     Toastify ({
@@ -188,7 +192,6 @@ const notifica = (mensaje) => {
     }).showToast ();
 }
 
-
 // Si el carrito existe lo cargo en arrayCarrito para seguir usándolo --> Uso operador Lógico
 (localStorage.getItem ("Carrito") != null ) &&  ( arrayCarrito = JSON.parse (localStorage.getItem ('Carrito')) );
 
@@ -199,8 +202,11 @@ const calcularTotalCarrito = (arrayCarrito) => {
     let totalCarrito = document.getElementById ("totalCarrito");
     let captionModalTotal = document.getElementById ("captionModalTotal");
     let totalRest = 0;
-    arrayCarrito.forEach(object => {        
-        totalRest += ( object.quantity * object.price );
+  
+    arrayCarrito.forEach(object => {    
+        if (object.quantity != 0) {    
+            totalRest += ( object.quantity * object.price );
+        }
     });
     // Actualizo el carrito en la pantalla general y en el Modal del detalle del carrito
     totalCarrito.textContent      = "$ "+parseInt (totalRest);
@@ -279,7 +285,6 @@ class carrito {
     }
 }
 
-
 modalShopRestaurantClose.addEventListener('click',(e)=>{
     // Cada vez que cierro el modal del carrito borro el carrito y lo guardo en el local Storage
     localStorage.removeItem ("Carrito");
@@ -306,15 +311,23 @@ modalRestaurant.addEventListener ('click', (e)=> {
 
 modalShopOpen.addEventListener ('click',(e)=>{
     // Guardo el carrito.
+
+    if (arrayCarrito.length > 0) {
     construirPopCarrito (arrayCarrito);
     modalShop.classList.add ('modal_menu--show'); 
+    }
+    else {
+        notifica ("El carrito está vacio");
+    }
 
 });
 
 modalShopClose.addEventListener ('click',(e)=>{
     // Cada vez que cierro el modal del carrito borro el carrito y lo guardo en el local Storage
     localStorage.removeItem ("Carrito");
-    localStorage.setItem ("Carrito", JSON.stringify(arrayCarrito));
+        if (arrayCarrito.length > 0 ) {
+            localStorage.setItem ("Carrito", JSON.stringify(arrayCarrito));
+         }
     modalShop.classList.remove ('modal_menu--show');
 });
 
@@ -322,7 +335,8 @@ modalShopClose.addEventListener ('click',(e)=>{
 // Al liberar el Storage actualizo el array del Carrito y reinicio todo.
 closeCarritoPago.addEventListener ('click',(e)=>{
     localStorage.removeItem ("Carrito");
-    alert ("Su Pago ha sido realizado... -> (RemoveStorage)")
+
+    notifica ("Su Pago ha sido realizado...");
     modalShop.classList.remove ('modal_menu--show');
 
     while (arrayCarrito.length > 0)
@@ -330,24 +344,15 @@ closeCarritoPago.addEventListener ('click',(e)=>{
 
     calcularTotalCarrito (arrayCarrito);
 
+    // Regreso al index
+    setTimeout(()=> location.href="/index.html",2000);
+
 });
 
 
-// en esta función a partir del nombre de un restaurante lleno un array filtrado con un objeto
-// Limpio cada vez en array antes de llenarlo otra vez
-
-
-// hacer un filter ...
-
-// función que guarda el arrayCarrito en el local Storage
-
-
 const filtrarCategory = (category) => {
-    while (arrayShopCategory.length > 0)
-           arrayShopCategory.pop();
-
+           arrayShopCategory.splice (0,arrayShopCategory.length);
     for (i = 0; i < arrayRestaurant.length; i++) {
-        console.log ("category  "+arrayRestaurant[i]);
         if (arrayRestaurant[i].category == category ) {
             const ShopAdd = new Restaurant(
                 arrayRestaurant[i].id,
@@ -364,13 +369,8 @@ const filtrarCategory = (category) => {
 }
 
 
-
-
-
 const filtrarRestaurant10 = (points) => {
-    while (arrayRestaurant10.length > 0)
-        arrayRestaurant10.pop();
-
+        arrayRestaurant10.splice (0,arrayRestaurant10.length);
     for (i = 0; i < arrayRestaurant.length; i++) {
        
         if ( (arrayRestaurant[i].top == parseInt (points) ) && (arrayRestaurant[i].category == "Restaurantes") ) {
@@ -389,12 +389,9 @@ const filtrarRestaurant10 = (points) => {
     return arrayRestaurant10;
 }
 
-// idRestaurant, idProduct, restaurant, category, nombre, image, price
 
 const filtrarProduct = (nombre) => {
-    
-    while (arrayProductFilter.length > 0)
-        arrayProductFilter.pop();
+        arrayProductFilter.splice (0, arrayProductFilter.length);
     for (i = 0; i < arrayProductRestaurant.length; i++) {
         if (arrayProductRestaurant[i].restaurant == nombre) {
 
@@ -431,9 +428,8 @@ const addCarrito = (idRestaurant, idProduct, restaurant, quantity, category, nom
 
 // Esta función agrega líneas en el carrito agrupándolas por artículo
 // Sería conveniente ordenar por restaurante / Producto
-const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nombre, image, price, arrayCarrito) => {
+const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nombre, image, price, arrayCarrito, symbol) => {
 
-    let mensaje = '';
     let existe  = 0;
 
     // Si el array del carrito está vacío grabo una línea sin mas
@@ -445,9 +441,9 @@ const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nomb
     // Si el array Carrito no está vacío...
     // En este else si al recorrer el carrito existe añado una cantidad
     else {
-        arrayCarrito.forEach ((arrayCarritogroup, index) => {
+        arrayCarrito.forEach ((arrayCarritogroup) => {
             if (nombre == arrayCarritogroup.nombre) {
-                arrayCarritogroup.quantity += valor;
+                (symbol == "+") ? arrayCarritogroup.quantity += valor : arrayCarritogroup.quantity -= valor;
                 existe = 1;
             }
         });
@@ -460,8 +456,21 @@ const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nomb
         }
     }
 
-}
+    // Borro las líneas que tengan cantidad 0
+ 
 
+    for (i=0; i< arrayCarrito.length; i++){
+        
+        console.log ("borrando - "+arrayCarrito[i].nombre+" "+arrayCarrito[i].quantity+" "+arrayCarrito[i].quantity);
+        if (arrayCarrito[i].quantity == 0) 
+        {
+            console.log ("voy a borrar - "+arrayCarrito[i].nombre);
+            arrayCarrito.splice(i,1);
+        }
+    }
+
+
+}
 
 const addSumTotal = (nuevoValor) => {
     totalProducts += nuevoValor;
@@ -488,7 +497,9 @@ const construirPopProducts = (restaurante) => {
                 });
 
     // Este bucle construye las tarjetas de los productos del restaurante
-    for (let i = 0; restaurante.length -1; i++) {
+  //  for (i in restaurante) {
+
+    for (let i = 0; i < restaurante.length; i++) {  
 
         let card_product = document.createElement ("div");
         let boxImageProductCenter = document.createElement ("div");
@@ -582,12 +593,11 @@ const construirPopProducts = (restaurante) => {
                 const action_Total   = document.getElementById ('captionTotal');
                 action_Total.textContent = "Total $ "+totalProducts;
 
-
                 // Voy actualizando el carrito cada vez que pulso + . -> Uso la desestructuración con el objeto restaurante[i]
                 const {idRestaurant, idProduct, restaurant, category, nombre, image, price } = restaurante[i];
 
                 alterCarrito (idRestaurant, idProduct, restaurant, 1, 
-                    category, nombre, image, price, arrayCarrito);
+                    category, nombre, image, price, arrayCarrito,"+");
 
                 // Muestro la cantidad en cada tarjeta que ya hay en el carrito de ese producto  
                     arrayCarrito.forEach(object => {
@@ -611,8 +621,6 @@ const construirPopProducts = (restaurante) => {
             } );
     }
 
-
-
 }   
 
 // Construyo el carrito con los restaurantes y sus productos comprados en el carrito
@@ -633,78 +641,168 @@ const construirPopCarrito = (arrayCarrito) => {
     seccion_product_modal.appendChild (card_RestaurantShop);
     //Recorro el array Ordenado armando primero como título el restaurante
     let idRestaurant = ""
-        arrayCarrito.forEach (object => {
-
-            let box_card_Description = document.createElement ("div");
-            let fontRestaurant = document.createElement ("div");
-            let card_productShop = document.createElement ("div");
-            let boxImageProductCenterShop = document.createElement ("div");
-            let boxImageProductShop = document.createElement ("div");
-            let imgRestaurantShop = document.createElement ("img");
-            let box_card_DescriptionProduct = document.createElement ("div");
-            let fontProduct = document.createElement ("div");
-            let fontAmount = document.createElement ("div");
-            // Tarjeta para editar cantidad
-            let card_edit_product = document.createElement ("div");
-            let addCardProduct = document.createElement ("div");
-            let fontQuantity = document.createElement ("div");
-            let removeCardProduct = document.createElement ("div");
 
 
-            card_RestaurantShop.className = "card_RestaurantShop";
-            box_card_Description.className = "box_card_Description";
-            fontRestaurant.className = "font-whiteBlack16 overflow-visible";
+    //console.log ("arrayCarrito desde construirPopCarrito -> "+arrayCarrito.length)
 
-            card_productShop.className = "card_productShop";
-            boxImageProductCenterShop.className = "boxImageProductCenterShop";
-            boxImageProductShop.className = "boxImageProductShop";
-            imgRestaurantShop.className = "imgRestaurantShop"
-            box_card_DescriptionProduct.className = "box_card_Description";
-            fontProduct.className = "font-whiteGray14Lite overflow-visible";
-            fontAmount.className = "font-whiteBlack14 overflow-visible";
+    for (let i = 0; i < arrayCarrito.length; i++) {  
 
-            // Tarjeta para editar cantidad
-            card_edit_product.className = "card_edit_product";
-            addCardProduct.className = "material-symbols-outlined";
-            fontQuantity.className = "font-white14LiteCard";
-            removeCardProduct.className = "material-symbols-outlined";
+        let box_card_Description = document.createElement ("div");
+        let fontRestaurant = document.createElement ("div");
+        let card_productShop = document.createElement ("div");
+        let boxImageProductCenterShop = document.createElement ("div");
+        let boxImageProductShop = document.createElement ("div");
+        let imgRestaurantShop = document.createElement ("img");
+        let box_card_DescriptionProduct = document.createElement ("div");
+        let fontProduct = document.createElement ("div");
+        let fontAmount = document.createElement ("div");
+        // Tarjeta para editar cantidad
+        let card_edit_product = document.createElement ("div");
+        let addCardProduct = document.createElement ("div");
+        let fontQuantity = document.createElement ("div");
+        let removeCardProduct = document.createElement ("div");
 
+        addCardProduct.id = arrayCarrito[i].price;
+        removeCardProduct.id = arrayCarrito[i].price;
+
+        card_RestaurantShop.className = "card_RestaurantShop";
+        box_card_Description.className = "box_card_Description";
+        fontRestaurant.className = "font-whiteBlack16 overflow-visible";
+
+        card_productShop.id = "card"+arrayCarrito[i].idRestaurant+arrayCarrito[i].idProduct;
+        card_productShop.className = "card_productShop";
+        boxImageProductCenterShop.className = "boxImageProductCenterShop";
+        boxImageProductShop.className = "boxImageProductShop";
+        imgRestaurantShop.className = "imgRestaurantShop"
+        box_card_DescriptionProduct.className = "box_card_Description";
+        fontProduct.className = "font-whiteGray14Lite overflow-visible";
+        fontAmount.className = "font-whiteBlack14 overflow-visible";
+
+        // Tarjeta para editar cantidad
+        card_edit_product.className = "card_edit_product";
+        addCardProduct.className = "material-symbols-outlined pointer action_add_shop";
+        fontQuantity.className = "font-white14LiteCard";
+        removeCardProduct.className = "material-symbols-outlined pointer action_remove_shop";
+
+        if ((idRestaurant == "") || (idRestaurant != arrayCarrito[i].idRestaurant) ) 
+        {
+            idRestaurant = arrayCarrito[i].idRestaurant;
+            if (idRestaurant == arrayCarrito[i].idRestaurant) {
+                    card_RestaurantShop.appendChild (box_card_Description);
+                        box_card_Description.appendChild (fontRestaurant)
+                        fontRestaurant.textContent = arrayCarrito[i].restaurant;
+            };
+        }
+
+         card_RestaurantShop.appendChild (card_productShop);
             
-            if ((idRestaurant == "") || (idRestaurant != object.idRestaurant) ) 
-            {
-                idRestaurant = object.idRestaurant;
-           //     alert (object.restaurant);
-                if (idRestaurant == object.idRestaurant) {
-                        card_RestaurantShop.appendChild (box_card_Description);
-                            box_card_Description.appendChild (fontRestaurant)
-                            fontRestaurant.textContent = object.restaurant;
-                };
-            }
-
-          //   alert (object.restaurant+" "+object.nombre);
-             card_RestaurantShop.appendChild (card_productShop);
+            card_productShop.appendChild (boxImageProductCenterShop);
+                boxImageProductCenterShop.appendChild (boxImageProductShop)
+                    boxImageProductShop.appendChild (imgRestaurantShop)
                 
-                card_productShop.appendChild (boxImageProductCenterShop);
-                    boxImageProductCenterShop.appendChild (boxImageProductShop)
-                        boxImageProductShop.appendChild (imgRestaurantShop)
+            card_productShop.appendChild (box_card_DescriptionProduct);
+                box_card_DescriptionProduct.appendChild (fontProduct);
+                box_card_DescriptionProduct.appendChild (fontAmount);    
+
+            card_productShop.appendChild (card_edit_product);
+                card_edit_product.appendChild (addCardProduct);
+                card_edit_product.appendChild (fontQuantity);
+                card_edit_product.appendChild (removeCardProduct);
+
+                addCardProduct.textContent    = "add";
+                fontQuantity.textContent      = arrayCarrito[i].quantity;
+                removeCardProduct.textContent = "remove";
+                                            
+                fontProduct.textContent = arrayCarrito[i].nombre;
+                fontAmount.textContent  = "$ "+arrayCarrito[i].price+" * "+arrayCarrito[i].quantity+" = $ "+parseInt (arrayCarrito[i].quantity * arrayCarrito[i].price);
+                imgRestaurantShop.src   = arrayCarrito[i].image;
+
+                const action_add_shop     = document.getElementsByClassName ('action_add_shop');
+                const action_remove_shope = document.getElementsByClassName ('action_remove_shop');
+
+                action_add_shop [i].addEventListener ('click',(e) => {
+                    e.preventDefault();
+                    addSumTotal (parseInt (action_add_shop [i].id));
+                    cantidad = 0;
+                    cantidadArray = [];
+                    totalrestClick = 0;
+    
+                    // Actualizo el total
+                    const action_Total   = document.getElementById ('captionTotal');
+                    action_Total.textContent = "Total $ "+totalProducts;
+
+                    // Voy actualizando el carrito cada vez que pulso + . -> Uso la desestructuración con el objeto restaurante[i]
+                    const {idRestaurant, idProduct, restaurant, category, nombre, image, price } = arrayCarrito[i];
+
+
+                    alterCarrito (idRestaurant, idProduct, restaurant, 1, 
+                        category, nombre, image, price, arrayCarrito,"+");
+    
+                    // Muestro la cantidad en cada tarjeta que ya hay en el carrito de ese producto  
+                        arrayCarrito.forEach(object => {
+                            if ( (object.idRestaurant === idRestaurant) && (object.idProduct === idProduct) ) {
+                                fontQuantity.textContent = object.quantity;
+                                fontAmount.textContent  = "$ "+object.price+" * "+object.quantity+" = $ "+parseInt (object.quantity * object.price);
+                            }
+                        });
+    
+                    // Muestro el total del restaurante ( -> pasar a una función )
+                        arrayCarrito.forEach(object => {
+                            if ( (object.idRestaurant === idRestaurant) ) {
+                                totalrestClick += ( object.quantity * object.price );
+                                action_Total.textContent = "Total $ "+totalrestClick;
+                                }
+                        });
                     
-                card_productShop.appendChild (box_card_DescriptionProduct);
-                    box_card_DescriptionProduct.appendChild (fontProduct);
-                    box_card_DescriptionProduct.appendChild (fontAmount);    
+                    // Actualizo el total del Carrito 
+                    calcularTotalCarrito (arrayCarrito);
+    
+                } );
 
-                card_productShop.appendChild (card_edit_product);
-                    card_edit_product.appendChild (addCardProduct);
-                    card_edit_product.appendChild (fontQuantity);
-                    card_edit_product.appendChild (removeCardProduct);
+                action_remove_shope [i].addEventListener ('click',(e) => {
+                    e.preventDefault();
+                    addSumTotal (parseInt (action_add_shop [i].id));
+                    cantidad = 0;
+                    cantidadArray = [];
+                    totalrestClick = 0;
+    
+                    // Actualizo el total
+                    const action_Total   = document.getElementById ('captionTotal');
+                    action_Total.textContent = "Total $ "+totalProducts;
 
-                    addCardProduct.textContent    = "add";
-                    fontQuantity.textContent      = object.quantity;
-                    removeCardProduct.textContent = "remove";
+                    // Voy actualizando el carrito cada vez que pulso + . -> Uso la desestructuración con el objeto restaurante[i]
+                    const {idRestaurant, idProduct, restaurant, category, nombre, image, price } = arrayCarrito[i];
 
-                    fontProduct.textContent = object.nombre;
-                    fontAmount.textContent  = "$ "+object.price+" * "+object.quantity+" = $ "+parseInt (object.quantity * object.price);
-                    imgRestaurantShop.src   = object.image;
+                    // Muestro la cantidad en cada tarjeta que ya hay en el carrito de ese producto  
+                        arrayCarrito.forEach(object => {
+                            if ( (object.idRestaurant === idRestaurant) && (object.idProduct === idProduct) ) {
 
-        });
+                                alterCarrito (idRestaurant, idProduct, restaurant, 1, 
+                                    category, nombre, image, price, arrayCarrito,"-");
+
+                                if (object.quantity == 0) {
+                                    card_productShop.style.display = "none";
+                                }
+
+                                fontQuantity.textContent = object.quantity;
+                                fontAmount.textContent  = "$ "+object.price+" * "+object.quantity+" = $ "+parseInt (object.quantity * object.price);
+                    
+                            }
+                        });
+    
+                    // Muestro el total del restaurante ( -> pasar a una función )
+                        arrayCarrito.forEach(object => {
+                            if ( (object.idRestaurant === idRestaurant) ) {
+                                totalrestClick += ( object.quantity * object.price );
+                                action_Total.textContent = "Total $ "+totalrestClick;
+                                }
+                        });
+                    
+                    // Actualizo el total del Carrito 
+                    calcularTotalCarrito (arrayCarrito);
+    
+                } );
+
+    }
 
 }
