@@ -347,13 +347,11 @@ closeCarritoPago.addEventListener ('click',(e)=>{
     // Regreso al index
     // indexOf
     if (paginaActual.indexOf ('github')) {
-        setTimeout(()=> location.href="github.io/index.html",2000);
+        setTimeout(()=> location.href="./index.html",2000);
     }
     else {
         setTimeout(()=> location.href="/index.html",2000);
     }
-
-
 
 
 });
