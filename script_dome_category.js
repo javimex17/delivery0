@@ -345,7 +345,16 @@ closeCarritoPago.addEventListener ('click',(e)=>{
     calcularTotalCarrito (arrayCarrito);
 
     // Regreso al index
-    setTimeout(()=> location.href="/index.html",2000);
+    // indexOf
+    if (paginaActual.indexOf ('github')) {
+        setTimeout(()=> location.href="github.io/index.html",2000);
+    }
+    else {
+        setTimeout(()=> location.href="/index.html",2000);
+    }
+
+
+
 
 });
 
