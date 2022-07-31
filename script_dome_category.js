@@ -76,7 +76,6 @@ paginaActual = window.location.pathname;
 let category = "";
 category = window.location.hash.replace ("#", "");
 
-    alert (paginaActual);
 
     if ( (paginaActual == "/index.html" ) || (paginaActual == "/" )  || (paginaActual == "/delivery0/index.html" )) {
         arrayRestaurantPrint = filtrarRestaurant10 (5);
