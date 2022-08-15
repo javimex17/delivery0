@@ -85,7 +85,7 @@ category = window.location.hash.replace ("#", "");
 
     console.log (paginaActual);
 
-    if ( (paginaActual == "/index.html" ) || (paginaActual == "/" )  || (paginaActual == "/delivery0/index.html" )) {
+    if ( (paginaActual == "/index.html" ) || (paginaActual == "/" )  || (paginaActual == "/delivery0/index.html" ) || (paginaActual == "/delivery0/" ) ) {
         arrayRestaurantPrint = filtrarRestaurant10 (5, busqueda);
     }
     else {
