@@ -11,6 +11,10 @@ const modalShop                 = document.querySelector  ('.modal_menu')
 const closeModalGeneral         = document.querySelector  ('.modal__closeRestaurant');
 const categoryTextBlack         = document.getElementById ('categoryTextBlack');
 const categoryTextRed           = document.getElementById ('categoryTextRed');
+const inputBusca                = document.getElementById ('inputBusca');
+const clickFind                 = document.getElementById ('search_shop');
+const clickTotalCarrito         = document.getElementById ('totalCarrito');
+
 
 const arrayRestaurant           = [];
 const arrayRestaurant10         = [];
@@ -19,6 +23,9 @@ const arrayShopCategory         = [];
 let   arrayRestaurantPrint      = [];
 const arrayProductFilter        = [];
 let   arrayCarrito              = [];
+
+let tiempo = 0;
+
 
 // Clase Restaurant con el constructor
 class Restaurant {
@@ -66,7 +73,7 @@ const reload = (section) => {
 }
 
 
-const construirInicio = () => {
+const construirInicio = (busqueda, tiempo) => {
 
 //Obtengo la página donde estoy  index o category
 paginaActual = window.location.pathname;
@@ -78,17 +85,18 @@ category = window.location.hash.replace ("#", "");
 
 
     if ( (paginaActual == "/index.html" ) || (paginaActual == "/" )  || (paginaActual == "/delivery0/index.html" )) {
-        arrayRestaurantPrint = filtrarRestaurant10 (5);
+        arrayRestaurantPrint = filtrarRestaurant10 (5, busqueda);
     }
     else {
-        arrayRestaurantPrint = filtrarCategory (category)
+        arrayRestaurantPrint = filtrarCategory (category, busqueda, tiempo)
         categoryTextBlack.textContent = category+" cerca de mi";
         categoryTextRed.textContent = category+" a domicilio";
+        inputBusca.placeholder = "Buscar "+category;
     }
 
         let banner_section_Cards = document.getElementById ("banner_section_Cards")
+        banner_section_Cards.innerHTML='';
 
-        
     for (let index = 0; index < arrayRestaurantPrint.length; index++) {
 
         let card_restaurant = document.createElement ("div");
@@ -116,7 +124,7 @@ category = window.location.hash.replace ("#", "");
 
         imgRestaurant.src = arrayRestaurantPrint[index].imagen;
         font_whiteBlack16Lite_nom.textContent = arrayRestaurantPrint[index].nombre;
-        font_whiteBlack16Lite_tiempo.textContent = arrayRestaurantPrint[index].tiempo+" min";
+        font_whiteBlack16Lite_tiempo.textContent = arrayRestaurantPrint[index].tiempo+" min - "+arrayRestaurantPrint[index].top+"*";
 
         banner_section_Cards.appendChild (card_restaurant);
             card_restaurant.appendChild (boxImageCenter);
@@ -167,7 +175,7 @@ const dataStoreProduct = async () => {
 
           addproductRestaurant  (post.idRestaurant, post.idProduct, post.restaurant, post.category, post.nombre, post.image, post.price);
       });
-      construirInicio ();
+      construirInicio ('Inicio', tiempo);
     
     } catch (error) {
       console.log (error);
@@ -285,6 +293,19 @@ class carrito {
     }
 }
 
+
+// click para filtrar restaurantes
+clickFind.addEventListener ('click',(e)=>{
+    construirInicio(inputBusca.value, tiempo);
+});
+
+
+// filtrar restaurantes en input
+inputBusca.oninput = function () {
+    construirInicio(inputBusca.value, tiempo);
+}
+
+
 modalShopRestaurantClose.addEventListener('click',(e)=>{
     // Cada vez que cierro el modal del carrito borro el carrito y lo guardo en el local Storage
     localStorage.removeItem ("Carrito");
@@ -306,6 +327,19 @@ modalRestaurant.addEventListener ('click', (e)=> {
     if (e.target.classList.contains ('modalRestaurant')) {
      //   modalRestaurant.classList.remove ('modalRestaurant--show');
     }
+});
+
+clickTotalCarrito.addEventListener ('click',(e)=>{
+    // Guardo el carrito.
+
+    if (arrayCarrito.length > 0) {
+    construirPopCarrito (arrayCarrito);
+    modalShop.classList.add ('modal_menu--show'); 
+    }
+    else {
+        notifica ("El carrito está vacio");
+    }
+
 });
 
 
@@ -357,30 +391,53 @@ closeCarritoPago.addEventListener ('click',(e)=>{
 });
 
 
-const filtrarCategory = (category) => {
+const filtrarCategory = (category, busqueda, tiempo) => {
+
+    let resultBusqueda;
+    let resultTiempo = 0;
            arrayShopCategory.splice (0,arrayShopCategory.length);
     for (i = 0; i < arrayRestaurant.length; i++) {
         if (arrayRestaurant[i].category == category ) {
+
+            if (tiempo != 0) {
+                if (arrayRestaurant[i].tiempo <= 30) {
+                    resultTiempo = 1;
+                }
+            } else {resultTiempo = 1}
+
+            if (busqueda != 'Inicio'){
+                resultBusqueda = arrayRestaurant[i].nombre.toLowerCase().indexOf (busqueda.toLowerCase());
+            } else resultBusqueda = 0;
+            
+            if ( ( resultBusqueda >= 0 ) && (resultTiempo == 1) ) {
             const ShopAdd = new Restaurant(
-                arrayRestaurant[i].id,
-                arrayRestaurant[i].nombre,
-                arrayRestaurant[i].imagen,
-                arrayRestaurant[i].top,
-                arrayRestaurant[i].tiempo,
-                arrayRestaurant[i].category
-                )
-                arrayShopCategory.push (ShopAdd);
+                    arrayRestaurant[i].id,
+                    arrayRestaurant[i].nombre,
+                    arrayRestaurant[i].imagen,
+                    arrayRestaurant[i].top,
+                    arrayRestaurant[i].tiempo,
+                    arrayRestaurant[i].category
+                    )
+                    arrayShopCategory.push (ShopAdd);
+            }
+
         }
     }
     return arrayShopCategory;
 }
 
 
-const filtrarRestaurant10 = (points) => {
+const filtrarRestaurant10 = (points, busqueda) => {
         arrayRestaurant10.splice (0,arrayRestaurant10.length);
     for (i = 0; i < arrayRestaurant.length; i++) {
-       
-        if ( (arrayRestaurant[i].top == parseInt (points) ) && (arrayRestaurant[i].category == "Restaurantes") ) {
+
+        if (busqueda != 'Inicio'){
+            result = arrayRestaurant[i].nombre.toLowerCase().indexOf (busqueda.toLowerCase());
+        } else result = 0;
+
+        console.log (`puntos ${points} categoria ${arrayRestaurant[i].category} resultado ${result}`)
+
+        if ( (arrayRestaurant[i].top == parseInt (points) ) && (arrayRestaurant[i].category == "Restaurantes") && (result >= 0) ) {
             const RestaurantAdd = new Restaurant(
                 arrayRestaurant[i].id,
                 arrayRestaurant[i].nombre,
@@ -392,7 +449,6 @@ const filtrarRestaurant10 = (points) => {
                 arrayRestaurant10.push (RestaurantAdd);
         }
     }
-
     return arrayRestaurant10;
 }
 
@@ -468,10 +524,9 @@ const alterCarrito = (idRestaurant, idProduct, restaurant, valor, category, nomb
 
     for (i=0; i< arrayCarrito.length; i++){
         
-        console.log ("borrando - "+arrayCarrito[i].nombre+" "+arrayCarrito[i].quantity+" "+arrayCarrito[i].quantity);
         if (arrayCarrito[i].quantity == 0) 
         {
-            console.log ("voy a borrar - "+arrayCarrito[i].nombre);
+           
             arrayCarrito.splice(i,1);
         }
     }
@@ -712,14 +767,15 @@ const construirPopCarrito = (arrayCarrito) => {
                 box_card_DescriptionProduct.appendChild (fontAmount);    
 
             card_productShop.appendChild (card_edit_product);
-                card_edit_product.appendChild (addCardProduct);
-                card_edit_product.appendChild (fontQuantity);
-                card_edit_product.appendChild (removeCardProduct);
 
-                addCardProduct.textContent    = "add";
-                fontQuantity.textContent      = arrayCarrito[i].quantity;
+                card_edit_product.appendChild (removeCardProduct);
+                card_edit_product.appendChild (fontQuantity);
+                card_edit_product.appendChild (addCardProduct);
+       
                 removeCardProduct.textContent = "remove";
-                                            
+                fontQuantity.textContent      = arrayCarrito[i].quantity;
+                addCardProduct.textContent    = "add";
+                    
                 fontProduct.textContent = arrayCarrito[i].nombre;
                 fontAmount.textContent  = "$ "+arrayCarrito[i].price+" * "+arrayCarrito[i].quantity+" = $ "+parseInt (arrayCarrito[i].quantity * arrayCarrito[i].price);
                 imgRestaurantShop.src   = arrayCarrito[i].image;

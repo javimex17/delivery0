@@ -39,9 +39,9 @@
         
                     <div class="boxFlex450 inCenter">
                         <div class="input_find">
-                        <input type="text" class="find font-gray" placeholder="Buscar en Delivery...">
+                        <input type="text" class="find font-gray" id="inputBusca" placeholder="Buscar en Delivery...">
                             <div class="red_button">
-                                <span class="material-symbols-outlined center_ico_white">search</span>
+                                <span class="material-symbols-outlined center_ico_white pointer" id="search_shop">search</span>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                             <span class="material-symbols-outlined center_ico_white action_menu_shop" id="action_menu_shop">shopping_cart</span>
                             
                             
-                            <a class="font-whiteBold" id="totalCarrito">0</a>
+                            <a class="font-whiteBold pointer" id="totalCarrito">0</a>
                         </div>
                         
                     </a>
@@ -76,41 +76,18 @@
     <div class="band_filter">
 
         <div class="box_button">
-
-            <a class="font-whiteBlack12 band_section">Filtrado por:
-            </a>
-            
+            <a class="font-whiteBlack12 band_section">Filtrado por:</a>
         </div>
 
-        <div class="box_button">
-            <div class="button_filter">
-                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.7533 9C10.2327 9 9 10.2327 9 11.7533C9 13.275 10.2329 14.5067 11.7533 14.5067C13.2737 14.5067 14.5067 13.275 14.5067 11.7533C14.5067 10.2327 13.274 9 11.7533 9ZM10.6667 11.7533C10.6667 11.1532 11.1532 10.6667 11.7533 10.6667C12.3535 10.6667 12.84 11.1532 12.84 11.7533C12.84 12.3541 12.3537 12.84 11.7533 12.84C11.153 12.84 10.6667 12.3541 10.6667 11.7533ZM16.3334 11.7534C16.3334 11.2932 16.7065 10.9201 17.1667 10.9201H21.9903C22.4505 10.9201 22.8236 11.2932 22.8236 11.7534C22.8236 12.2137 22.4505 12.5868 21.9903 12.5868H17.1667C16.7065 12.5868 16.3334 12.2137 16.3334 11.7534ZM18.9836 19.5697C18.9836 18.969 19.4699 18.4831 20.0702 18.4831C20.6706 18.4831 21.1569 18.969 21.1569 19.5697C21.1569 20.1699 20.6704 20.6564 20.0702 20.6564C19.4701 20.6564 18.9836 20.1699 18.9836 19.5697ZM20.0702 16.8164C18.5498 16.8164 17.3169 18.0481 17.3169 19.5697C17.3169 21.0904 18.5496 22.3231 20.0702 22.3231C21.5909 22.3231 22.8236 21.0904 22.8236 19.5697C22.8236 18.0481 21.5906 16.8164 20.0702 16.8164ZM9.83366 18.7363C9.37342 18.7363 9.00033 19.1094 9.00033 19.5697C9.00033 20.0299 9.37342 20.403 9.83366 20.403H14.6564C15.1166 20.403 15.4897 20.0299 15.4897 19.5697C15.4897 19.1094 15.1166 18.7363 14.6564 18.7363H9.83366Z" fill="#6A696E"></path></svg>
-            </div>
-        </div>
-
-        <div class="box_button">
-            <input type="checkbox" name="my-checkbox1" id="button_checked">
-            <label for="button_checked" class="button_filter_label font-gray12">Promociones</label>
-        </div>
-
-        <div class="box_button">
+        <div class="box_button" id="tiempo30">
             <input type="checkbox" name="my-checkbox2" id="button_checked1">
             <label for="button_checked1" class="button_filter_label font-gray12">Llega en 30 mins</label>
         </div>
 
         <div class="box_button">
-
             <input type="checkbox" name="my-checkbox3" id="button_checked2">
             <label for="button_checked2" class="button_filter_label font-gray12">Más de 4.5 *</label>
-
         </div>
-
-        <div class="box_button">
-
-            <input type="checkbox" name="my-checkbox4" id="button_checked3">
-            <label for="button_checked3" class="button_filter_label font-gray12">Nuevos</label>
-
-        </div>    
 
     </div>
 
@@ -243,7 +220,11 @@
 
             <div class="line_gray"></div>
             <div class="container_minisection">
-                <a id="closeCarritoPago" class="button_green font-whiteBold" href="#">Realizar Pago</a>
+            
+                <div class="boxFlex450 inCenter">                   
+                    <a id="closeCarritoPago" class="button_green font-whiteBold" href="#">Realizar Pago</a>
+                </div>
+
             </div>
             
         </div>
@@ -255,6 +236,8 @@
         <div class="modal__container">
             
             <div class="container_top">
+
+      
                 <div class="container-ico">
                     <a href="#" class="modal__close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="sc-jjj11z-1 gDckCs"><path fill="#6A696E" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm4.3 14.3a.996.996 0 01-1.41 0L12 13.41 9.11 16.3a.996.996 0 11-1.41-1.41L10.59 12 7.7 9.11A.996.996 0 119.11 7.7L12 10.59l2.89-2.89a.996.996 0 111.41 1.41L13.41 12l2.89 2.89c.38.38.38 1.02 0 1.41z"></path></svg>
                     </a>

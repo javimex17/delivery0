@@ -40,9 +40,9 @@
         
                     <div class="boxFlex450 inCenter">
                         <div class="input_find">
-                        <input type="text" class="find font-gray" placeholder="Buscar en Delivery...">
+                        <input type="text" class="find font-gray" id="inputBusca" placeholder="Buscar en Delivery...">
                             <div class="red_button">
-                                <span class="material-symbols-outlined center_ico_white">search</span>
+                                <span class="material-symbols-outlined center_ico_white pointer" id="search_shop">search</span>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                             <span class="material-symbols-outlined center_ico_white action_menu_shop" id="action_menu_shop">shopping_cart</span>
                             
                             
-                            <a class="font-whiteBold" id="totalCarrito">0</a>
+                            <a class="font-whiteBold pointer" id="totalCarrito">0</a>
                         </div>
                         
                     </a>
@@ -98,22 +98,9 @@
             <a class="font-whiteBlack18 text_category">Categorías</a>
         </div>
 
-     <div class="banner_section_Cards" id="box_category">
+        <div class="banner_section_Cards" id="box_category">
 
-
-
-
-<!--
-        <div class="card_category">
-            <img class="img_category" src="./assets/category/restaurants.webp" alt="restaurants">
-            <div class="box_textCategory">
-                <a class="font-whiteBlack16 text_category">Restaurantes</a>
-                <span class="material-symbols-outlined arrow_red" >trending_flat</span>
-            </div>
         </div>
--->
-
-     </div>
 
      </div>
 
@@ -128,105 +115,7 @@
 
 
         <!--    
-          <div class="card_top_restaurant">  
-
-
-            <div class="boxImageCenter">
-                <div class="boxImage">
-                  <img src="assets/restaurants/mcdonalds.webp" alt="Cargando imagen...">
-                </div>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteBlack16Lite text_category">McDonald's</a>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteGray14Lite text_category">30 min</a>
-            </div>
-          </div>
-     
-          <div class="card_top_restaurant">  
-            <div class="boxImageCenter">
-                <div class="boxImage">
-                  <img src="assets/restaurants/la-docena.webp" alt="Cargando imagen...">
-                </div>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteBlack16Lite text_category">La Docena</a>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteGray14Lite text_category">30 min</a>
-            </div>
-          </div>
-
-          <div class="card_top_restaurant">  
-            <div class="boxImageCenter">
-                <div class="boxImage">
-                  <img src="assets/restaurants/shake.webp" alt="Cargando imagen...">
-                </div>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteBlack16Lite text_category">Shake Shack </a>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteGray14Lite text_category">30 min</a>
-            </div>
-          </div>          
-
-          <div class="card_top_restaurant">  
-            <div class="boxImageCenter">
-                <div class="boxImage">
-                  <img src="assets/restaurants/kfc.webp" alt="Cargando imagen...">
-                </div>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteBlack16Lite text_category">KFC </a>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteGray14Lite text_category">30 min</a>
-            </div>
-          </div>                   
-
-          <div class="card_top_restaurant">  
-            <div class="boxImageCenter">
-                <div class="boxImage">
-                  <img src="assets/restaurants/panda.webp" alt="Cargando imagen...">
-                </div>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteBlack16Lite text_category">Panda </a>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteGray14Lite text_category">30 min</a>
-            </div>
-          </div>     
-          
-          <div class="card_top_restaurant">  
-            <div class="boxImageCenter">
-                <div class="boxImage">
-                  <img src="assets/restaurants/subway.webp" alt="Cargando imagen...">
-                </div>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteBlack16Lite text_category">Subway</a>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteGray14Lite text_category">30 min</a>
-            </div>
-          </div>         
-
-          <div class="card_top_restaurant">  
-            <div class="boxImageCenter">
-                <div class="boxImage">
-                  <img src="assets/restaurants/carl.webp" alt="Cargando imagen...">
-                </div>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteBlack16Lite text_category">Carl's Junior</a>
-            </div>
-            <div class="boxNomRestaurant">
-                <a class="font-whiteGray14Lite text_category">30 min</a>
-            </div>
-          </div>            
+    
         -->
 
 
@@ -456,7 +345,6 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="./script_dome_category.js"></script>
 <script src="./script.js"></script>
-<script src="./script_dom_Home.js"></script>
 <script src="./script_actions.js"></script>
 
 

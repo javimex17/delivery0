@@ -344,18 +344,20 @@ a {
     width: 180px;
     height: 180px;
     background-color: white;
-    margin: 12px;
+    margin: 10px;
+    border-radius: 12px;
+    margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;   
-    border-radius: 12px;
 }
 
 
-.img_category {
-    margin-top: 0px;
-    padding-top: 10px;
+
+.link_imagen_category {
+    margin-top: 20px;
+    padding-top: 20px;
     width: 65%;
     cursor : pointer; 
 }
@@ -985,7 +987,6 @@ a {
     align-content: space-around;
     align-items: flex-start;
     justify-content: space-between;
-
 }
 
 .button_filter_label {
